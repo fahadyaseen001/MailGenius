@@ -128,9 +128,9 @@ const HeroImageCarousel = memo(() => {
             src={images[currentIndex].src}
             alt={`Hero image ${currentIndex + 1}`}
             className="absolute inset-0 w-full h-full object-cover"
-            loading="lazy"
             width={600}
             height={450}
+           fetchPriority="high" // Signal high priority for this image
           />
         </motion.div>
       </AnimatePresence>
