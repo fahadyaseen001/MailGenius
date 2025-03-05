@@ -131,10 +131,10 @@ function Home() {
   const navigate = useNavigate()
   const [darkMode, setDarkMode] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const featuresRef = useRef<HTMLDivElement>(null)
-  const useCasesRef = useRef<HTMLDivElement>(null)
-  const testimonialsRef = useRef<HTMLDivElement>(null)
-  const resourcesRef = useRef<HTMLDivElement>(null)
+  const featuresRef = useRef<HTMLDivElement | null>(null)
+  const useCasesRef = useRef<HTMLDivElement | null>(null)
+  const testimonialsRef = useRef<HTMLDivElement | null>(null)
+  const resourcesRef = useRef<HTMLDivElement | null>(null)
 
   const featureStepsData = [
     { 
@@ -177,8 +177,19 @@ function Home() {
   }
 
   const scrollToSection = (ref: React.RefObject<HTMLDivElement | null>) => {
-    ref.current?.scrollIntoView({ behavior: "smooth" })
+    // Close mobile menu
     setMobileMenuOpen(false)
+
+    // Use setTimeout to ensure menu closing animation completes
+    setTimeout(() => {
+      if (ref.current) {
+        // Use smooth scroll with additional offset for better positioning
+        window.scrollTo({
+          top: ref.current.offsetTop - 80, // Adjust offset as needed
+          behavior: 'smooth'
+        })
+      }
+    }, 300) // Slight delay to allow menu to close
   }
 
   const handleGetStarted = () => {
@@ -190,7 +201,7 @@ function Home() {
   }
 
   return (
-    <div className={`min-h-screen bg-background ${darkMode ? "dark" : ""}`}>
+    <div className={`min-h-screen bg-background ${darkMode ? "dark" : ""} overflow-x-hidden`}>
 
       {/* Header/Navigation */}
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -258,7 +269,8 @@ function Home() {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
-              className="md:hidden border-t bg-background"
+              className="md:hidden border-t bg-background overflow-x-hidden"
+
             >
               <div className="container py-4 space-y-4">
                 <Button variant="ghost" onClick={() => scrollToSection(featuresRef)} className="w-full justify-start">
