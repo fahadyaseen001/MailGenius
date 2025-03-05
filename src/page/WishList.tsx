@@ -331,50 +331,50 @@ function WishList() {
                     <div className="text-white/40 text-xs">mailjet.io</div>
                   </div>
                   
-                  {/* Testimonial carousel */}
-                  <div className="relative h-40 mb-8 overflow-hidden">
-                    <AnimatePresence mode="wait">
-                      {testimonials.map((testimonial, index) => (
-                        activeTestimonial === index && (
-                          <motion.div
-                            key={index}
-                            className="absolute inset-0 p-6 rounded-2xl bg-gradient-to-br from-white/5 to-transparent border border-white/10 flex flex-col justify-between"
-                            initial={{ opacity: 0, x: 20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            exit={{ opacity: 0, x: -20 }}
-                            transition={{ duration: 0.3 }}
-                          >
-                            <p className="text-white/90 text-lg font-light italic leading-relaxed">{testimonial.text}</p>
-                            <div className="flex items-center mt-4">
-                              <img
-                                src={testimonial.avatar || "/placeholder.svg"}
-                                alt={testimonial.name}
-                                className="w-10 h-10 rounded-full mr-3 object-cover border border-white/20"
-                              />
-                              <div>
-                                <p className="text-white font-medium">{testimonial.name}</p>
-                                <p className="text-white/60 text-sm">{testimonial.role}</p>
-                              </div>
-                            </div>
-                          </motion.div>
-                        )
-                      ))}
-                    </AnimatePresence>
-                    
-                    {/* Testimonial indicators */}
-                    <div className="absolute bottom-2 right-2 flex space-x-1">
-                      {testimonials.map((_, index) => (
-                        <button
-                          key={index}
-                          onClick={() => setActiveTestimonial(index)}
-                          className={`w-2 h-2 rounded-full transition-colors ${
-                            activeTestimonial === index ? 'bg-white' : 'bg-white/30'
-                          }`}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                  
+                 {/* Testimonial carousel */}
+<div className="relative min-h-[240px] mb-8 overflow-hidden">
+  <AnimatePresence mode="wait">
+    {testimonials.map((testimonial, index) => (
+      activeTestimonial === index && (
+        <motion.div
+          key={index}
+          className="absolute inset-0 p-6 rounded-2xl bg-gradient-to-br from-white/5 to-transparent border border-white/10 flex flex-col justify-between"
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -20 }}
+          transition={{ duration: 0.3 }}
+        >
+          <p className="text-white/90 text-lg font-light italic leading-relaxed flex-grow">{testimonial.text}</p>
+          <div className="flex items-center mt-4">
+            <img
+              src={testimonial.avatar || "/placeholder.svg"}
+              alt={testimonial.name}
+              className="w-10 h-10 rounded-full mr-3 object-cover border border-white/20"
+            />
+            <div>
+              <p className="text-white font-medium">{testimonial.name}</p>
+              <p className="text-white/60 text-sm">{testimonial.role}</p>
+            </div>
+          </div>
+        </motion.div>
+      )
+    ))}
+  </AnimatePresence>
+  
+  {/* Testimonial indicators */}
+  <div className="absolute bottom-2 right-2 flex space-x-1">
+    {testimonials.map((_, index) => (
+      <button
+        key={index}
+        onClick={() => setActiveTestimonial(index)}
+        className={`w-2 h-2 rounded-full transition-colors ${
+          activeTestimonial === index ? 'bg-white' : 'bg-white/30'
+        }`}
+        aria-label={`View testimonial ${index + 1}`}
+      />
+    ))}
+  </div>
+</div>
                   {/* Feature list */}
                   <div className="space-y-4">
                     {features.map((feature, index) => (
