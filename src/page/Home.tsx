@@ -9,29 +9,8 @@ import { Feature108 } from "@/components/shadcnblocks-com-feature108"
 import { FeatureSteps } from "@/components/feature-section"
 import Header from "../components/Header"
 
-const slideUp = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
-}
 
-const stagger = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.12,
-    },
-  },
-}
 
-const scaleUp = {
-  hidden: { scale: 0.95, opacity: 0 },
-  visible: {
-    scale: 1,
-    opacity: 1,
-    transition: { type: "spring", stiffness: 300, damping: 30 },
-  },
-}
 
 const Logos = {
   canva: () => (
