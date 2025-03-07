@@ -4,6 +4,28 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Import Roobert font - better implementation */
+@font-face {
+  font-family: 'Roobert';
+  src: url('https://www.cdnfonts.com/s/35365/Roobert-SemiBold.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Roobert';
+  src: url('https://www.cdnfonts.com/s/35365/Roobert-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Force Roobert font throughout the application */
+html, body {
+  font-family: 'Roobert', sans-serif !important;
+}
+
 :root {
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);

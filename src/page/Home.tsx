@@ -1,9 +1,8 @@
 import { useState, useRef } from "react"
 import { useNavigate } from "react-router-dom"
 import { motion } from "framer-motion"
-import { ArrowRight, ChevronRight } from "lucide-react"
+import { ArrowRight, ChevronRight } from 'lucide-react'
 import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
 import { TestimonialsSection } from "../components/testimonials-with-marquee"
 import { Marquee } from "@/components/ui/marquee"
 import { Feature108 } from "@/components/shadcnblocks-com-feature108"
@@ -139,7 +138,6 @@ function Home() {
     },
   ]
 
-
   const handleGetStarted = () => {
     navigate("/dashboard")
   }
@@ -154,88 +152,146 @@ function Home() {
       <Header />
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden py-20 md:py-28 lg:py-32 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="grid gap-12 lg:gap-16 grid-cols-1 lg:grid-cols-2 items-center">
-            <motion.div
-              className="flex flex-col justify-center space-y-6 md:space-y-8 text-center lg:text-left"
-              initial="hidden"
-              animate="visible"
-              variants={stagger}
+      <section className="relative overflow-hidden pt-0 pb-20 md:pb-28 lg:pb-32 bg-white">
+        <div className="container mx-auto px-4 max-w-7xl relative">
+          {/* Left side decorative flowers */}
+          <div className="absolute left-0 bottom-0 z-0 hidden md:block">
+            <img 
+              src="/images/@image.png" 
+              alt="Decorative element" 
+              className="w-60 h-auto" 
+              style={{ transform: "translateY(-20%) translateX(-45%)" }}
+            />
+          </div>
+
+          {/* Right side decorative flowers */}
+          <div className="absolute right-0 top-0 z-0 hidden md:block">
+            <img 
+              src="/images/mailclosed.png" 
+              alt="Decorative element" 
+              className="w-80 h-auto" 
+              style={{ transform: "translateY(-20%) translateX(15%)" }}
+            />
+          </div>
+
+          {/* Main Content Card */}
+          <div
+            className="bg-[#f9f9f7] rounded-2xl p-10 md:p-14 lg:p-20 max-w-[85rem] mx-auto"
+            style={{ marginTop: "-1px" }}
+          >
+            <motion.div 
+              className="flex flex-col items-center text-center"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
             >
-              <motion.div variants={slideUp} className="flex justify-center lg:justify-start">
-                <Badge className="px-3.5 py-1.5 text-sm font-medium bg-blueberry-100 text-blueberry-800 rounded-full">
-                  New AI-Powered Features
-                </Badge>
-              </motion.div>
-
-              <motion.h1
-                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-gray-900 leading-tight"
-                variants={slideUp}
+              <h1
+                className="font-[600] text-black leading-[74px] text-[74px] tracking-tight mb-6"
+                style={{
+                  fontFamily: "Roobert, sans-serif",
+                  fontWeight: 600,
+                  fontSize: "74px",
+                  lineHeight: "74px",
+                }}
               >
-                Go to market with unique data
-              </motion.h1>
+                Go to market with unique
+                <br />
+                <span className="inline-block">—and the ability to act on it</span>
+              </h1>
 
-              <motion.p className="max-w-2xl font-medium mx-auto lg:mx-0 text-md text-gray-600 leading-relaxed" variants={slideUp}>
+              <p className="text-lg md:text-xl text-gray-700 max-w-3xl mx-auto mb-10" style={{ fontFamily: "Roobert, sans-serif", fontWeight: 600, }}>
                 Access 100+ premium data sources and AI research agents in one platform, then automate growth workflows
                 to turn insights into revenue.
-              </motion.p>
+              </p>
 
-              <motion.div
-                className="flex flex-col sm:flex-row gap-4 md:gap-5 pt-6 md:pt-8 justify-center lg:justify-start"
-                variants={scaleUp}
+              <button
+                onClick={handleGetStarted}
+                className="text-sm font-medium bg-black text-white px-3.5 sm:px-4 lg:px-5 py-2 sm:py-2.5 rounded-md hover:bg-gray-900 transition-all duration-300 group items-center justify-center overflow-hidden shadow-sm hover:shadow-md transform hover:-translate-y-0.5"
+                style={{ fontFamily: "Roobert, sans-serif", fontWeight: 600, }}
               >
-                <Button
-                  className="text-lg px-8 py-4 rounded-full bg-blueberry-500 text-white hover:bg-blueberry-600 transition-colors shadow-lg"
-                  onClick={handleGetStarted}
-                >
-                  Start building for free <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-                <Button
-                  variant="outline"
-                  className="text-lg px-8 py-4 rounded-full border-2 border-gray-300 text-gray-700 hover:bg-gray-100 transition-colors"
-                  onClick={handleBookDemo}
-                >
-                  Book a demo <ChevronRight className="ml-2 h-5 w-5" />
-                </Button>
-              </motion.div>
-
-              <motion.div variants={slideUp} className="pt-8 md:pt-10">
-                <p className="text-sm text-gray-500 flex items-center gap-2 justify-center lg:justify-start">
-                  <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5 text-blueberry-500">
-                    <path
-                      d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22Z"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M9 12L11 14L15 10"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
+                Start building for free
+                <span className="relative overflow-hidden ml-2 inline-block h-4 w-4">
+                  <svg
+                    className="absolute transform transition-all duration-300 group-hover:translate-y-[-100%]"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    width="16"
+                    height="16"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                   </svg>
-                  Trusted by 300,000+ leading GTM teams worldwide
-                </p>
-              </motion.div>
-            </motion.div>
-
-            <motion.div
-              className="relative order-1 lg:order-2 w-full max-w-lg mx-auto"
-              initial={{ opacity: 0, scale: 0.9, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.3 }}
-            >
-              <img
-                src="/placeholder.svg?height=500&width=500"
-                alt="DataAI Platform"
-                className="w-full h-auto rounded-lg shadow-2xl"
-              />
+                  <svg
+                    className="absolute transform translate-y-[100%] transition-all duration-300 group-hover:translate-y-0"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    width="16"
+                    height="16"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </span>
+              </button>
             </motion.div>
           </div>
+
+          {/* Trust Indicators - Outside the card */}
+          <motion.div
+            className="mt-15 text-center"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          >
+            <p className="uppercase text-xs font-medium tracking-wider text-black mb-3" style={{ fontFamily: "Roobert, sans-serif", fontWeight: 600, }}>
+              TRUSTED BY MORE THAN 300,000 LEADING GTM TEAMS OF ALL SIZES
+            </p>
+            <div className="flex items-center justify-center gap-4">
+              <div className="flex items-center">
+                <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5 text-gray-400">
+                  <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.5" />
+                  <path d="M12 8v8M8 12h8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                </svg>
+                <div className="flex ml-2">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <svg key={star} viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5 text-yellow-400">
+                      <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                    </svg>
+                  ))}
+                </div>
+                <span className="ml-2 text-gray-600" style={{ fontFamily: "Roobert, sans-serif", fontWeight: 600, }}>4.9 rating</span>
+              </div>
+              <div className="h-4 w-px bg-gray-300 mx-2"></div>
+              <div className="flex items-center">
+                <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5 text-gray-400">
+                  <path
+                    d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <circle
+                    cx="9"
+                    cy="7"
+                    r="4"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+                <span className="ml-2 text-gray-600" style={{ fontFamily: "Roobert, sans-serif", fontWeight: 600, }}>20k+ growth community</span>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </section>
 
@@ -258,7 +314,7 @@ function Home() {
                   strokeLinejoin="round"
                 />
               </svg>
-              <span className="text-base font-medium tracking-wide text-gray-800">TRUSTED BY LEADING GTM TEAMS</span>
+              <span className="text-base font-medium tracking-wide text-gray-800" style={{ fontFamily: "Roobert, sans-serif", fontWeight: 600, }}>TRUSTED BY LEADING GTM TEAMS</span>
             </div>
 
             <Marquee className="py-8" pauseOnHover speed={25}>
@@ -403,16 +459,17 @@ function Home() {
       <section className="py-24 md:py-32 bg-white">
         <div className="container mx-auto px-4">
           <div className="flex flex-col items-center justify-center space-y-8 text-center">
-            <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-gray-900 max-w-4xl">
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-gray-900 max-w-4xl" style={{ fontFamily: "Roobert, sans-serif", fontWeight: 600, }}>
               Ready to transform your business?
             </h2>
-            <p className="max-w-2xl text-xl text-gray-600 leading-relaxed">
+            <p className="max-w-2xl text-xl text-gray-600 leading-relaxed" style={{ fontFamily: "Roobert, sans-serif", fontWeight: 600, }}>
               Join thousands of companies using DataAI to drive growth and make better decisions.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 md:gap-5 pt-8">
               <Button
                 className="text-lg px-8 py-4 rounded-full bg-blueberry-500 text-white hover:bg-blueberry-600 transition-colors shadow-lg"
                 onClick={handleGetStarted}
+                style={{ fontFamily: "Roobert, sans-serif", fontWeight: 600, }}
               >
                 Start building for free <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
@@ -420,6 +477,7 @@ function Home() {
                 variant="outline"
                 className="text-lg px-8 py-4 rounded-full border-2 border-gray-300 text-gray-700 hover:bg-gray-100 transition-colors"
                 onClick={handleBookDemo}
+                style={{ fontFamily: "Roobert, sans-serif", fontWeight: 600, }}
               >
                 Book a demo <ChevronRight className="ml-2 h-5 w-5" />
               </Button>
@@ -441,15 +499,15 @@ function Home() {
                   height={32}
                   className="rounded-lg"
                 />
-                <span className="text-xl font-bold">DataAI</span>
+                <span className="text-xl font-bold" style={{ fontFamily: "Roobert, sans-serif", fontWeight: 600, }}>DataAI</span>
               </div>
-              <p className="text-gray-400 max-w-xs">
+              <p className="text-gray-400 max-w-xs" style={{ fontFamily: "Roobert, sans-serif", fontWeight: 600, }}>
                 Transform your business with unique data insights and AI-powered automation. Make better decisions,
                 faster.
               </p>
               <div className="flex gap-4">
                 {["Twitter", "LinkedIn", "GitHub"].map((social) => (
-                  <a key={social} href="#" className="text-gray-400 hover:text-white transition-colors">
+                  <a key={social} href="#" className="text-gray-400 hover:text-white transition-colors" style={{ fontFamily: "Roobert, sans-serif", fontWeight: 600, }}>
                     {social}
                   </a>
                 ))}
@@ -458,11 +516,11 @@ function Home() {
 
             {["Product", "Company", "Resources"].map((category) => (
               <div key={category} className="space-y-4">
-                <h3 className="text-lg font-semibold">{category}</h3>
+                <h3 className="text-lg font-semibold" style={{ fontFamily: "Roobert, sans-serif", fontWeight: 600, }}>{category}</h3>
                 <ul className="space-y-2">
                   {["Features", "Solutions", "Integrations", "Enterprise", "Security"].map((item) => (
                     <li key={item}>
-                      <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                      <a href="#" className="text-gray-400 hover:text-white transition-colors" style={{ fontFamily: "Roobert, sans-serif", fontWeight: 600, }}>
                         {item}
                       </a>
                     </li>
@@ -473,10 +531,10 @@ function Home() {
           </div>
 
           <div className="mt-16 pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-400">© {new Date().getFullYear()} DataAI. All rights reserved.</p>
+            <p className="text-gray-400" style={{ fontFamily: "Roobert, sans-serif", fontWeight: 600, }}>© {new Date().getFullYear()} DataAI. All rights reserved.</p>
             <div className="flex gap-6 mt-4 md:mt-0">
               {["Privacy", "Terms", "Cookies"].map((item) => (
-                <a key={item} href="#" className="text-gray-400 hover:text-white transition-colors">
+                <a key={item} href="#" className="text-gray-400 hover:text-white transition-colors" style={{ fontFamily: "Roobert, sans-serif", fontWeight: 600, }}>
                   {item}
                 </a>
               ))}
@@ -489,4 +547,3 @@ function Home() {
 }
 
 export default Home
-

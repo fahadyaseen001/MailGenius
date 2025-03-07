@@ -22,9 +22,11 @@ const Header = () => {
     }
   }, [mobileMenuOpen])
 
-  const handleBookDemo = () => {
-    navigate("/wishlist")
+
+  const handleGetStarted = () => {
+    navigate("/dashboard")
   }
+
 
   const getMenuContentByName = (name: string) => {
     switch (name.toLowerCase()) {
@@ -158,7 +160,7 @@ const Header = () => {
 
           {/* Desktop CTA Buttons - Hidden on mobile */}
           <div className="relative group hidden lg:block">
-            <button className="inline-flex text-sm font-medium text-black mr-4" onClick={handleBookDemo}>
+            <button className="inline-flex text-sm font-medium text-black mr-4" onClick={handleGetStarted}>
               <span className="relative">
                 Get a demo
                 <div
@@ -400,7 +402,7 @@ const Header = () => {
                     Start building - for free
                   </button>
                   <button 
-                    onClick={handleBookDemo}
+                    onClick={handleGetStarted}
                     className="w-full py-3 px-4 text-sm font-medium text-center text-black bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors duration-200"
                   >
                     Get a demo

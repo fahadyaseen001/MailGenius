@@ -2,6 +2,10 @@
 module.exports = {
     content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}", "*.{js,ts,jsx,tsx,mdx}"],
     theme: {
+      fontFamily: {
+        sans: ['Roobert', 'sans-serif'],
+        roobert: ['Roobert', 'sans-serif'],
+      },
       extend: {
         maxWidth: {
           'container': '1280px'
