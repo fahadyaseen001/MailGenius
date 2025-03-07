@@ -185,31 +185,26 @@ const Header = () => {
             </button>
           </div>
 
-          <button className="hidden lg:inline-flex ml-4 lg:ml-6 text-sm font-medium bg-black text-white px-3 sm:px-4 lg:px-5 py-2 sm:py-2.5 rounded-md hover:bg-gray-900 transition-all duration-300 group items-center justify-center overflow-hidden">
+          <motion.button 
+            className="hidden lg:inline-flex ml-4 lg:ml-6 text-sm font-medium bg-black text-white px-3 sm:px-4 lg:px-5 py-2 sm:py-2.5 rounded-md transition-all duration-300 flex items-center justify-center gap-2"
+            whileHover={{ 
+              backgroundColor: "#3B82F6",
+              scale: 1.04
+            }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ duration: 0.1 }}
+          >
             Sign up
-            <span className="relative overflow-hidden ml-2 inline-block h-4 w-4">
-              <svg
-                className="absolute transform transition-all duration-300 group-hover:translate-y-[-100%]"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                width="16"
-                height="16"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-              </svg>
-              <svg
-                className="absolute transform translate-y-[100%] transition-all duration-300 group-hover:translate-y-0"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                width="16"
-                height="16"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-              </svg>
-            </span>
-          </button>
+            <svg
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              width="16"
+              height="16"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </motion.button>
         </div>
       </div>
 
