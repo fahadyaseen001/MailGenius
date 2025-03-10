@@ -4,51 +4,18 @@ import { ArrowRight, ChevronRight } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { TestimonialsSection } from "../components/testimonials-with-marquee"
 import { Feature108 } from "@/components/shadcnblocks-com-feature108"
-import { FeatureSteps } from "@/components/feature-section"
 import Header from "../components/Header"
 import HeroSection from '../components/hero-section'
-import RestSection from '../components/rest-section'
+import PortfolioSlider from "../components/ui/feature-card"
 
 function Home() {
   const navigate = useNavigate()
   const [] = useState(false)
-  const featuresRef = useRef<HTMLDivElement>(null)
   const useCasesRef = useRef<HTMLDivElement>(null)
   const testimonialsRef = useRef<HTMLDivElement>(null)
   const resourcesRef = useRef<HTMLDivElement>(null)
+  
 
-  const featureStepsData = [
-    {
-      step: "Step 1",
-      title: "High Bounce Rates",
-      content:
-        "Reduce them to <1% with AI-powered email validation and DNS management.",
-      image: "https://images.unsplash.com/photo-1557200134-90327ee9fafa?q=80&w=2070&auto=format&fit=crop",
-    },
-    {
-      step: "Step 2",
-      title: "Spam Folders",
-      content:
-        "Ensure 100% mailbox delivery with automated warm-ups and domain health optimization",
-      image: "https://images.unsplash.com/photo-1720288954220-bba3be2d1d6e?q=80&w=1933&auto=format&fit"
-
-    },
-    {
-      step: "Step 3",
-      title: "Generic Outreach",
-      content:
-        "Personalize emails using job changes, company milestones, and LinkedIn activity.",
-      image: "https://images.unsplash.com/photo-1675352162037-792ae4045e3c?q=80&w=1932&auto=format&fit=crop"
-    },
-    {
-      step: "Step 4",
-      title: "Fragmented Tools",
-      content:
-        "Replace 10+ apps with one platform: data extraction, enrichment, sending, and analytics",
-      image: "https://images.unsplash.com/photo-1556155092-490a1ba16284?q=80&w=2070&auto=format&fit=crop",
-    },
-    
-  ]
 
   const handleGetStarted = () => {
     navigate("/dashboard")
@@ -66,18 +33,9 @@ function Home() {
       {/* Hero Section */}
       <HeroSection handleGetStarted={handleGetStarted} />
 
-      <RestSection handleGetStarted={handleGetStarted} />
-
-
-      {/* Feature Steps Section */}
-      <section ref={featuresRef} className="py-20 md:py-22">
-        <FeatureSteps
-          features={featureStepsData}
-          title="Core Problems We Solve"
-          autoPlayInterval={4000}
-          className="[&_h3]:text-3xl [&_h3]:font-bold [&_h3]:tracking-tight [&_p]:text-lg [&_p]:leading-relaxed [&_p]:text-gray-600"
-        />
-      </section>
+   <section>
+    <PortfolioSlider/>
+   </section>
 
       {/* Use Cases Section */}
       <section ref={useCasesRef} className="py-24 md:py-32 bg-white">

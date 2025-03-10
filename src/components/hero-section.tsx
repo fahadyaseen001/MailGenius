@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import TrustedBySection from './trusted-by-section';
+import RestSection from './rest-section';
 
 interface HeroSectionProps {
   handleGetStarted: () => void;
@@ -9,14 +10,14 @@ interface HeroSectionProps {
 const HeroSection: React.FC<HeroSectionProps> = ({ handleGetStarted }) => {
   return (
     <section className="relative overflow-hidden pt-0 pb-20 md:pb-28 lg:pb-32 bg-white">
-      <div className="container mx-auto px-4 max-w-7xl relative">
+      <div className="container mx-auto px-2 sm:px-4 max-w-screen-2xl relative">
         {/* Left side image */}
         <div className="absolute left-0 bottom-0 z-0 hidden md:block">
           <img 
             src="/images/@image.png" 
             alt="Decorative element" 
-            className="w-60 h-auto" 
-            style={{ transform: "translateY(-20%) translateX(-45%)" }}
+            className="w-80 h-auto" 
+            style={{ transform: "translateY(-20%) translateX(-10%)" }}
             loading="eager"
             fetchPriority="high"
           />
@@ -27,8 +28,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({ handleGetStarted }) => {
           <img 
             src="/images/mailclosed.png" 
             alt="Decorative element" 
-            className="w-80 h-auto" 
-            style={{ transform: "translateY(-20%) translateX(35%)" }}
+            className="w-100 h-auto" 
+            style={{ transform: "translateY(-20%) translateX(10%)" }}
             loading="eager"
             fetchPriority="high"
           />
@@ -36,7 +37,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ handleGetStarted }) => {
 
         {/* Main Content Card */}
         <div
-          className="bg-[#f9f9f7] rounded-2xl p-10 md:p-14 lg:p-20 max-w-[85rem] mx-auto"
+          className="bg-[#f9f9f7] rounded-[32px] p-12 md:p-16 lg:p-24 max-w-full w-full sm:w-[92%] mx-auto"
           style={{ marginTop: "-1px" }}
         >
           <motion.div 
@@ -81,7 +82,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ handleGetStarted }) => {
               className="text-sm font-medium bg-black text-white px-3.5 sm:px-4 lg:px-5 py-2 sm:py-2.5 rounded-md transition-all duration-300 flex items-center justify-center gap-2 shadow-sm"
               style={{ fontFamily: "Roobert, sans-serif", fontWeight: 600 }}
               whileHover={{ 
-                backgroundColor: "#3B82F6",
+                backgroundColor: "grey",
                 scale: 1.04
               }}
               whileTap={{ scale: 0.95 }}
@@ -159,8 +160,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({ handleGetStarted }) => {
         </motion.div>
       </div>
       <TrustedBySection />
-      {/* Rest Section */}
-      {/* <RestSection handleGetStarted={handleGetStarted} /> */}
+      <RestSection handleGetStarted={handleGetStarted} />
+
     </section>
   );
 };

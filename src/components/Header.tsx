@@ -188,7 +188,7 @@ const Header = () => {
           <motion.button 
             className="hidden lg:inline-flex ml-4 lg:ml-6 text-sm font-medium bg-black text-white px-3 sm:px-4 lg:px-5 py-2 sm:py-2.5 rounded-md transition-all duration-300 flex items-center justify-center gap-2"
             whileHover={{ 
-              backgroundColor: "#3B82F6",
+              backgroundColor: "grey",
               scale: 1.04
             }}
             whileTap={{ scale: 0.95 }}

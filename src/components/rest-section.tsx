@@ -1,65 +1,161 @@
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import TabsComponent from "./ui/tab-switcher";
+import { useState } from "react";
 
 interface RestSectionProps {
   handleGetStarted: () => void;
 }
 
+interface HeadingContent {
+  text: string;
+  highlightWord: string;
+  highlightColor: string;
+}
+
+const headingContent: Record<string, HeadingContent> = {
+  tab1: {
+    text: "Reduce them to <1% with AI-powered email validation and DNS management",
+    highlightWord: "<1%",
+    highlightColor: "#3B82F6"
+  },
+  tab2: {
+    text: "Ensure 100% mailbox delivery with automated warm-ups and domain health optimization",
+    highlightWord: "100%",
+    highlightColor: "#22C55E"
+  },
+  tab3: {
+    text: "Personalize emails using job changes, company milestones, and LinkedIn activity",
+    highlightWord: "Personalize",
+    highlightColor: "#F59E0B"
+  },
+  tab4: {
+    text: "Replace 10+ apps with one platform: data extraction, enrichment, sending, and analytics",
+    highlightWord: "10+",
+    highlightColor: "#EC4899"
+  }
+};
+
 const RestSection: React.FC<RestSectionProps> = ({ handleGetStarted }) => {
-  return (
-    <section className="relative flex justify-between items-center w-full pb-0 overflow-hidden px-4 lg:px-8">
-      <div className="flex flex-col items-start justify-center max-w-3xl z-10">
-        <h1
-          className="font-[600] text-black leading-[74px] text-[74px] tracking-tight mb-6 text-left"
-          style={{
-            fontFamily: "Roobert, sans-serif",
-            fontWeight: 600,
-            fontSize: "50px",
-            lineHeight: "74px",
+  const [activeTab, setActiveTab] = useState<string | null>(null);
+  
+  const handleTabChange = (tab: string) => {
+    setActiveTab(tab);
+  };
+  
+  // Function to render heading with highlighted word when a tab is active
+  const renderActiveTabHeading = (content: HeadingContent) => {
+    const parts = content.text.split(content.highlightWord);
+    return (
+      <>
+        {parts[0]}
+        <motion.span
+          className="inline-block cursor-pointer"
+          whileHover={{ 
+            color: content.highlightColor, 
+            scale: 1.02,
+            textShadow: `0px 0px 8px rgba(${hexToRgb(content.highlightColor)}, 0.3)`
           }}
+          transition={{ duration: 0.3 }}
+          style={{ color: content.highlightColor }}
         >
-          <motion.span
-            className="inline-block cursor-pointer"
-            whileHover={{ 
-              color: "#3B82F6", 
-              scale: 1.02,
-              textShadow: "0px 0px 8px rgba(59, 130, 246, 0.3)"
+          {content.highlightWord}
+        </motion.span>
+        {parts[1]}
+      </>
+    );
+  };
+  
+  // Helper function to convert hex color to RGB format for shadow
+  const hexToRgb = (hex: string) => {
+    const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+    const formattedHex = hex.replace(shorthandRegex, (_, r, g, b) => r + r + g + g + b + b);
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(formattedHex);
+    
+    return result 
+      ? `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}`
+      : '59, 130, 246';
+  };
+
+  return (
+    <section className="relative flex justify-between items-center w-full pb-0 overflow-hidden px-25 lg:px-35">
+      <div className="flex flex-col items-start justify-center max-w-3xl z-10">
+        <div className="mb-30">
+          <TabsComponent onTabChange={handleTabChange} defaultTab={activeTab || undefined} />
+        </div>
+        
+        {activeTab ? (
+          <AnimatePresence mode="wait">
+            <motion.h1
+              key={activeTab}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.5 }}
+              className="font-[600] text-black leading-[74px] text-[74px] tracking-tight mb-6 text-left"
+              style={{
+                fontFamily: "Roobert, sans-serif",
+                fontWeight: 600,
+                fontSize: "50px",
+                lineHeight: "74px",
+              }}
+            >
+              {renderActiveTabHeading(headingContent[activeTab])}
+            </motion.h1>
+          </AnimatePresence>
+        ) : (
+          <h1
+            className="font-[600] text-black leading-[74px] text-[74px] tracking-tight mb-6 text-left"
+            style={{
+              fontFamily: "Roobert, sans-serif",
+              fontWeight: 600,
+              fontSize: "50px",
+              lineHeight: "74px",
             }}
-            transition={{ duration: 0.3 }}
           >
-            - Eliminate bounce rates -
-          </motion.span>
-          <br />
-          <motion.span 
-            className="inline-block text-gray-500 cursor-pointer"
-            whileHover={{ 
-              color: "#10B981", 
-              scale: 1.02,
-              textShadow: "0px 0px 8px rgba(16, 185, 129, 0.3)"
-            }}
-            transition={{ duration: 0.3 }}
-          >
-          - Automate domain warmups -
-          </motion.span>
-          <br/>
-          <motion.span 
-            className="inline-block text-yellow-500 cursor-pointer"
-            whileHover={{ 
-              color: "#F59E0B", 
-              scale: 1.02,
-              textShadow: "0px 0px 8px rgba(245, 158, 11, 0.3)" 
-            }}
-            transition={{ duration: 0.3 }}
-          >
-           - Send hyper relevant emails -
-          </motion.span>
-        </h1>
+            <motion.span
+              className="inline-block cursor-pointer"
+              whileHover={{ 
+                color: "#3B82F6", 
+                scale: 1.02,
+                textShadow: "0px 0px 8px rgba(59, 130, 246, 0.3)"
+              }}
+              transition={{ duration: 0.3 }}
+            >
+              Eliminate bounce rates
+            </motion.span>
+            <br />
+            <motion.span 
+              className="inline-block text-gray-500 cursor-pointer"
+              whileHover={{ 
+                color: "#10B981", 
+                scale: 1.02,
+                textShadow: "0px 0px 8px rgba(16, 185, 129, 0.3)"
+              }}
+              transition={{ duration: 0.3 }}
+            >
+            Automate domain warmups
+            </motion.span>
+            <br/>
+            <motion.span 
+              className="inline-block text-yellow-500 cursor-pointer"
+              whileHover={{ 
+                color: "#F59E0B", 
+                scale: 1.02,
+                textShadow: "0px 0px 8px rgba(245, 158, 11, 0.3)" 
+              }}
+              transition={{ duration: 0.3 }}
+            >
+             Send hyper relevant emails
+            </motion.span>
+          </h1>
+        )}
 
         <motion.button
           onClick={handleGetStarted}
           className="text-sm font-medium bg-black text-white px-3.5 sm:px-4 lg:px-5 py-2 sm:py-2.5 rounded-md transition-all duration-300 flex items-center justify-center gap-2 shadow-sm"
           style={{ fontFamily: "Roobert, sans-serif", fontWeight: 600 }}
           whileHover={{ 
-            backgroundColor: "#3B82F6",
+            backgroundColor: activeTab ? headingContent[activeTab].highlightColor : "grey",
             scale: 1.04
           }}
           whileTap={{ scale: 0.95 }}
@@ -81,7 +177,7 @@ const RestSection: React.FC<RestSectionProps> = ({ handleGetStarted }) => {
         <img 
           src="/images/mailopen.png" 
           alt="Decorative element" 
-          className="w-80 h-auto" 
+          className="w-90 h-auto" 
           loading="eager"
           fetchPriority="high"
         />

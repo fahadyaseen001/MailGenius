@@ -80,7 +80,7 @@ const TrustedBySection = () => {
     <div className="container mx-auto px-4">
       <div className="flex flex-col items-center justify-center space-y-8 text-center">
     
-        <Marquee className="py-8" pauseOnHover speed={25}>
+        <Marquee className="py-8" speed={200}>
           {[Logos.canva, Logos.hubspot, Logos.openai, Logos.square].map((Logo, index) => (
             <div
               key={index}

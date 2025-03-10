@@ -20,7 +20,6 @@ export function Marquee({
   const marqueeRef = React.useRef<HTMLDivElement>(null);
   const [, setTrackWidth] = React.useState(0);
   const [contentWidth, setContentWidth] = React.useState(0);
-  const [] = React.useState(2);
 
   const contentRef = React.useRef<HTMLDivElement>(null);
 
@@ -64,7 +63,9 @@ export function Marquee({
   // Calculate the CSS animation values
   const animationDuration = React.useMemo(() => {
     if (!contentWidth) return 15;
-    return (contentWidth / 100) * (40 - Math.min(35, Math.max(5, speed)));
+    // Make speed more intuitive - higher speed = faster movement
+    // Base duration of 30 seconds divided by speed factor
+    return 30 / (speed / 100);
   }, [contentWidth, speed]);
 
   return (
