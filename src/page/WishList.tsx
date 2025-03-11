@@ -33,7 +33,6 @@ const features = [
 ];
 
 function WishList() {
-  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
