@@ -1,12 +1,12 @@
 import { useState, useRef } from "react"
 import { useNavigate } from "react-router-dom"
-import { ArrowRight, ChevronRight } from 'lucide-react'
-import { Button } from "@/components/ui/button"
-import { TestimonialsSection } from "../components/testimonials-with-marquee"
 import { Feature108 } from "@/components/shadcnblocks-com-feature108"
 import Header from "../components/Header"
 import HeroSection from '../components/hero-section'
 import PortfolioSlider from "../components/ui/feature-card"
+import TestimonialSection from "../components/testimonial-section"
+import CTASection from "../components/cta-section"
+import Footer from "../components/Footer"
 
 function Home() {
   const navigate = useNavigate()
@@ -15,14 +15,12 @@ function Home() {
   const testimonialsRef = useRef<HTMLDivElement>(null)
   const resourcesRef = useRef<HTMLDivElement>(null)
   
-
-
   const handleGetStarted = () => {
     navigate("/dashboard")
   }
 
   const handleBookDemo = () => {
-    navigate("/wishlist")
+    navigate("/contact")
   }
 
   return (
@@ -33,9 +31,9 @@ function Home() {
       {/* Hero Section */}
       <HeroSection handleGetStarted={handleGetStarted} />
 
-   <section>
-    <PortfolioSlider/>
-   </section>
+      <section>
+        <PortfolioSlider/>
+      </section>
 
       {/* Use Cases Section */}
       <section ref={useCasesRef} className="py-24 md:py-32 bg-white">
@@ -114,130 +112,17 @@ function Home() {
         />
       </section>
 
-      {/* Testimonials Section */}
-      <section ref={testimonialsRef} className="py-24 md:py-32 bg-gray-50">
-        <TestimonialsSection
-          title="Loved by teams worldwide"
-          description="See what our customers have to say about our platform."
-          testimonials={[
-            {
-              author: {
-                name: "John Doe",
-                handle: "@johndoe",
-                avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop&crop=face",
-              },
-              text: "DataAI has transformed how we approach our go-to-market strategy. The insights we've gained have directly contributed to our revenue growth.",
-              href: "https://twitter.com/johndoe",
-            },
-            {
-              author: {
-                name: "Jane Smith",
-                handle: "@janesmith",
-                avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=face",
-              },
-              text: "The AI-powered features have saved us countless hours in data analysis. It's like having a team of data scientists at our fingertips.",
-              href: "https://twitter.com/janesmith",
-            },
-            {
-              author: {
-                name: "Alex Johnson",
-                handle: "@alexj",
-                avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
-              },
-              text: "The automation workflows have streamlined our processes and eliminated repetitive tasks. Our team can now focus on strategic initiatives.",
-              href: "https://twitter.com/alexj",
-            },
-          ]}
-        />
-      </section>
+      {/* Testimonials Section with Curved Top */}
+      <TestimonialSection testimonialsRef={testimonialsRef} />
 
       {/* CTA Section */}
-      <section className="py-24 md:py-32 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col items-center justify-center space-y-8 text-center">
-            <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-gray-900 max-w-4xl" style={{ fontFamily: "Roobert, sans-serif", fontWeight: 600, }}>
-              Ready to transform your business?
-            </h2>
-            <p className="max-w-2xl text-xl text-gray-600 leading-relaxed" style={{ fontFamily: "Roobert, sans-serif", fontWeight: 600, }}>
-              Join thousands of companies using DataAI to drive growth and make better decisions.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 md:gap-5 pt-8">
-              <Button
-                className="text-lg px-8 py-4 rounded-full bg-blueberry-500 text-white hover:bg-blueberry-600 transition-colors shadow-lg"
-                onClick={handleGetStarted}
-                style={{ fontFamily: "Roobert, sans-serif", fontWeight: 600, }}
-              >
-                Start building for free <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-              <Button
-                variant="outline"
-                className="text-lg px-8 py-4 rounded-full border-2 border-gray-300 text-gray-700 hover:bg-gray-100 transition-colors"
-                onClick={handleBookDemo}
-                style={{ fontFamily: "Roobert, sans-serif", fontWeight: 600, }}
-              >
-                Book a demo <ChevronRight className="ml-2 h-5 w-5" />
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
+      <CTASection 
+        handleGetStarted={handleGetStarted} 
+        handleBookDemo={handleBookDemo} 
+      />
 
       {/* Footer */}
-      <footer ref={resourcesRef} className="bg-gray-900 text-white py-16">
-        <div className="container mx-auto px-4">
-          <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-5">
-            <div className="lg:col-span-2 space-y-6">
-              <div className="flex items-center space-x-3">
-                <img
-                  src="https://raw.githubusercontent.com/shadcn-ui/ui/main/apps/www/public/favicon-32x32.png"
-                  alt="DataAI Logo"
-                  width={32}
-                  height={32}
-                  className="rounded-lg"
-                />
-                <span className="text-xl font-bold" style={{ fontFamily: "Roobert, sans-serif", fontWeight: 600, }}>DataAI</span>
-              </div>
-              <p className="text-gray-400 max-w-xs" style={{ fontFamily: "Roobert, sans-serif", fontWeight: 600, }}>
-                Transform your business with unique data insights and AI-powered automation. Make better decisions,
-                faster.
-              </p>
-              <div className="flex gap-4">
-                {["Twitter", "LinkedIn", "GitHub"].map((social) => (
-                  <a key={social} href="#" className="text-gray-400 hover:text-white transition-colors" style={{ fontFamily: "Roobert, sans-serif", fontWeight: 600, }}>
-                    {social}
-                  </a>
-                ))}
-              </div>
-            </div>
-
-            {["Product", "Company", "Resources"].map((category) => (
-              <div key={category} className="space-y-4">
-                <h3 className="text-lg font-semibold" style={{ fontFamily: "Roobert, sans-serif", fontWeight: 600, }}>{category}</h3>
-                <ul className="space-y-2">
-                  {["Features", "Solutions", "Integrations", "Enterprise", "Security"].map((item) => (
-                    <li key={item}>
-                      <a href="#" className="text-gray-400 hover:text-white transition-colors" style={{ fontFamily: "Roobert, sans-serif", fontWeight: 600, }}>
-                        {item}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-16 pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-400" style={{ fontFamily: "Roobert, sans-serif", fontWeight: 600, }}>© {new Date().getFullYear()} DataAI. All rights reserved.</p>
-            <div className="flex gap-6 mt-4 md:mt-0">
-              {["Privacy", "Terms", "Cookies"].map((item) => (
-                <a key={item} href="#" className="text-gray-400 hover:text-white transition-colors" style={{ fontFamily: "Roobert, sans-serif", fontWeight: 600, }}>
-                  {item}
-                </a>
-              ))}
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer resourcesRef={resourcesRef} />
     </div>
   )
 }

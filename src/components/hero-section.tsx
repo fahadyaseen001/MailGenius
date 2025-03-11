@@ -82,7 +82,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ handleGetStarted }) => {
               className="text-sm font-medium bg-black text-white px-3.5 sm:px-4 lg:px-5 py-2 sm:py-2.5 rounded-md transition-all duration-300 flex items-center justify-center gap-2 shadow-sm"
               style={{ fontFamily: "Roobert, sans-serif", fontWeight: 600 }}
               whileHover={{ 
-                backgroundColor: "grey",
+                backgroundColor: "rgb(76, 145, 255)",
                 scale: 1.04
               }}
               whileTap={{ scale: 0.95 }}
