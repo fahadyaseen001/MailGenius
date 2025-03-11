@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Loader2, CheckCircle, AlertCircle, Sparkles, ArrowRight, Twitter, ChevronRight } from 'lucide-react';
 import { BackgroundBeams } from "@/components/ui/background-beams";
 import { Input } from '@/components/ui/input';
