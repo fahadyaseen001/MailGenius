@@ -82,6 +82,8 @@ const Header = () => {
                     const unclickableItems = ["Product", "Solution", "Resources", "Company"];
                     if (item.hasSubmenu && !unclickableItems.includes(item.name)) {
                       setActiveMenu(activeMenu === item.name ? null : item.name)
+                    } else if (item.name === "Pricing") {
+                      navigate("/pricing");
                     }
                   }}
                   aria-expanded={activeMenu === item.name}
@@ -237,6 +239,9 @@ const Header = () => {
                           e.preventDefault();
                           if (item.hasSubmenu) {
                             toggleMobileSubmenu(item.name)
+                          } else if (item.name === "Pricing") {
+                            navigate("/pricing");
+                            setMobileMenuOpen(false); // Close mobile menu after navigation
                           }
                         }}
                         aria-expanded={mobileSubmenuStates[item.name]}

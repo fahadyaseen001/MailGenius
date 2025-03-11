@@ -1,7 +1,6 @@
 import { useState, useRef } from "react"
 import { useNavigate } from "react-router-dom"
 import { Feature108 } from "@/components/shadcnblocks-com-feature108"
-import Header from "../components/Header"
 import HeroSection from '../components/hero-section'
 import PortfolioSlider from "../components/ui/feature-card"
 import TestimonialSection from "../components/testimonial-section"
@@ -20,14 +19,12 @@ function Home() {
   }
 
   const handleBookDemo = () => {
-    navigate("/contact")
+    navigate("/wishlist")
   }
 
   return (
     <div className="min-h-screen bg-white text-gray-900">
-      {/* Header/Navigation */}
-      <Header />
-
+      
       {/* Hero Section */}
       <HeroSection handleGetStarted={handleGetStarted} />
 

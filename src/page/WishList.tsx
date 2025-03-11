@@ -58,9 +58,7 @@ function WishList() {
     };
   }, []);
 
-  const handleBackClick = () => {
-    navigate('/');
-  };
+
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -101,17 +99,17 @@ function WishList() {
   ];
 
   return (
-    <div className="min-h-screen bg-black flex flex-col items-center justify-center relative overflow-hidden">
-      {/* Gradient background with improved aesthetics */}
-      <div className="absolute inset-0 bg-gradient-to-b from-violet-600/10 via-indigo-900/5 to-black z-0" />
-      <div className="absolute inset-0 bg-[url('/noise.png')] opacity-30 mix-blend-overlay z-0" />
+    <div className="min-h-screen bg-white flex flex-col items-center justify-center relative overflow-hidden">
+      {/* Light background with subtle patterns */}
+      <div className="absolute inset-0 bg-gradient-to-b from-blue-50 via-white to-gray-50 z-0" />
+      <div className="absolute inset-0 bg-[url('/noise.png')] opacity-10 mix-blend-overlay z-0" />
       
-      {/* Floating elements with more sophisticated animation */}
+      {/* Floating elements with light colors */}
       <div className="absolute inset-0 overflow-hidden">
         {[...Array(30)].map((_, i) => (
           <motion.div
             key={i}
-            className={`absolute h-${Math.random() > 0.7 ? 3 : 2} w-${Math.random() > 0.7 ? 3 : 2} ${Math.random() > 0.8 ? 'bg-violet-400/20' : 'bg-white/10'} rounded-full`}
+            className={`absolute h-${Math.random() > 0.7 ? 3 : 2} w-${Math.random() > 0.7 ? 3 : 2} ${Math.random() > 0.8 ? 'bg-blue-200/40' : 'bg-gray-200/40'} rounded-full`}
             animate={{
               x: [Math.random() * window.innerWidth, Math.random() * window.innerWidth],
               y: [Math.random() * window.innerHeight, Math.random() * window.innerHeight],
@@ -127,21 +125,12 @@ function WishList() {
         ))}
       </div>
 
-      {/* Back button with improved styling */}
-      <motion.button
-        className="fixed top-6 left-6 p-3 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 text-white/90 flex items-center space-x-2 z-50 hover:bg-white/10 transition-colors"
-        whileHover={{ scale: 1.05, backgroundColor: "rgba(255, 255, 255, 0.1)" }}
-        whileTap={{ scale: 0.95 }}
-        onClick={handleBackClick}
-      >
-        <ArrowLeft className="w-5 h-5" />
-        <span className="text-sm font-medium">Back</span>
-      </motion.button>
+
 
       <div className="w-full max-w-6xl relative z-10 mx-auto px-4 md:px-6 py-12 md:py-24">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           <div className="order-2 lg:order-1">
-            {/* Enhanced social proof section */}
+            {/* Enhanced social proof section with light theme */}
             <motion.div
               className="flex flex-col space-y-6 mb-8"
               initial={{ opacity: 0, y: 20 }}
@@ -155,50 +144,50 @@ function WishList() {
                       key={i}
                       src={img}
                       alt={`User ${i + 1}`}
-                      className="w-10 h-10 rounded-full border-2 border-black object-cover"
+                      className="w-10 h-10 rounded-full border-2 border-white object-cover shadow-sm"
                       initial={{ opacity: 0, x: -10 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: i * 0.1 }}
                     />
                   ))}
                 </div>
-                <div className="ml-4 bg-white/5 backdrop-blur-sm px-4 py-2 rounded-full">
-                  <span className="text-white/90 text-sm font-medium">
-                    <span className="text-white font-bold">{waitlistCount.toLocaleString()}</span> people waiting
+                <div className="ml-4 bg-gray-100 px-4 py-2 rounded-full shadow-sm">
+                  <span className="text-gray-700 text-sm font-medium">
+                    <span className="text-gray-900 font-bold">{waitlistCount.toLocaleString()}</span> people waiting
                   </span>
                 </div>
               </div>
 
               <motion.div 
-                className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-violet-600/20 to-indigo-600/20 border border-violet-500/20 backdrop-blur-xl"
+                className="inline-flex items-center px-4 py-2 rounded-full bg-blue-50 border border-blue-100 shadow-sm"
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.3 }}
               >
-                <Sparkles className="w-4 h-4 text-violet-400 mr-2" />
-                <span className="text-violet-200 text-sm font-medium">Coming Q1 2025</span>
+                <Sparkles className="w-4 h-4 text-blue-500 mr-2" />
+                <span className="text-blue-700 text-sm font-medium">Coming Q1 2025</span>
               </motion.div>
 
               <motion.h1 
-                className="text-4xl sm:text-5xl md:text-6xl xl:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white via-violet-100 to-white/90 leading-[1.1]"
+                className="text-4xl sm:text-5xl md:text-6xl xl:text-7xl font-bold text-gray-900 leading-[1.1]"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
               >
-                The future of email
+                The future of <span className="bg-gradient-to-r from-blue-500 to-indigo-600 text-transparent bg-clip-text"> Email </span>
                 <br />is almost here
               </motion.h1>
               
               <motion.p 
-                className="text-lg text-white/70 max-w-xl leading-relaxed"
+                className="text-lg text-gray-600 max-w-xl leading-relaxed"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.2 }}
               >
-                Join the waitlist for early access to MailJet's revolutionary email platform. 
+                Join the waitlist for early access to MailGenie's revolutionary email platform. 
                 Be among the first to experience the next generation of email communication.
               </motion.p>
 
-              {/* Form section with improved styling */}
+              {/* Form section with light styling */}
               <div className="max-w-md w-full mt-6">
                 <AnimatePresence mode="wait">
                   {!isSuccess ? (
@@ -220,16 +209,16 @@ function WishList() {
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
                           placeholder="Enter your email"
-                          className="w-full px-6 py-4 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/50 text-white placeholder-white/40 text-lg transition-all duration-200"
+                          className="w-full px-6 py-4 bg-white border border-gray-200 rounded-2xl focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 text-gray-700 placeholder-gray-400 text-lg transition-all duration-200 shadow-sm"
                           disabled={isSubmitting}
                         />
-                        <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-violet-500/20 to-indigo-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 blur-xl" />
+                        <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-200/50 to-indigo-200/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 blur-xl" />
                       </motion.div>
 
                       <motion.button
                         type="submit"
                         disabled={isSubmitting}
-                        className="w-full flex items-center justify-center space-x-2 bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white font-medium py-4 px-6 rounded-2xl transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed shadow-lg shadow-violet-500/25 hover:shadow-violet-500/40"
+                        className="w-full flex items-center justify-center space-x-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-medium py-4 px-6 rounded-2xl transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed shadow-md hover:shadow-lg"
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                       >
@@ -254,19 +243,19 @@ function WishList() {
                       transition={{ type: "spring", duration: 0.5 }}
                     >
                       <motion.div
-                        className="w-20 h-20 mx-auto rounded-full bg-gradient-to-r from-violet-600 to-indigo-600 flex items-center justify-center"
+                        className="w-20 h-20 mx-auto rounded-full bg-gradient-to-r from-blue-500 to-indigo-500 flex items-center justify-center shadow-md"
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
                         transition={{ type: "spring", delay: 0.2 }}
                       >
                         <CheckCircle className="h-10 w-10 text-white" />
                       </motion.div>
-                      <h2 className="text-3xl font-bold text-white">You're in!</h2>
-                      <p className="text-white/70 text-lg">You're now #{waitlistCount.toLocaleString()} on our waitlist.</p>
+                      <h2 className="text-3xl font-bold text-gray-900">You're in!</h2>
+                      <p className="text-gray-600 text-lg">You're now #{waitlistCount.toLocaleString()} on our waitlist.</p>
                       <div className="pt-4 flex flex-col sm:flex-row gap-4 justify-center">
                         <motion.button
                           onClick={() => {window.location.href = 'https://twitter.com/intent/tweet?text=Just%20joined%20the%20waitlist%20for%20@MailJet%20-%20the%20future%20of%20email%20is%20coming!%20🚀'}}
-                          className="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-[#1DA1F2]/10 hover:bg-[#1DA1F2]/20 text-white/90 hover:text-white transition-colors"
+                          className="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-[#1DA1F2]/10 hover:bg-[#1DA1F2]/20 text-[#1DA1F2] transition-colors shadow-sm"
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
                         >
@@ -275,7 +264,7 @@ function WishList() {
                         </motion.button>
                         <motion.button
                           onClick={() => setIsSuccess(false)}
-                          className="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-white/5 hover:bg-white/10 text-white/80 hover:text-white transition-colors"
+                          className="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 transition-colors shadow-sm"
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
                         >
@@ -288,16 +277,16 @@ function WishList() {
                 </AnimatePresence>
               </div>
 
-              {/* Error Message with improved styling */}
+              {/* Error Message with light styling */}
               <AnimatePresence>
                 {error && (
                   <motion.div 
-                    className="mt-4 p-4 bg-red-500/10 backdrop-blur-xl text-white/90 rounded-xl flex items-start border border-red-500/20 max-w-md"
+                    className="mt-4 p-4 bg-red-50 text-red-700 rounded-xl flex items-start border border-red-100 max-w-md shadow-sm"
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                   >
-                    <AlertCircle className="h-5 w-5 mr-3 flex-shrink-0 mt-0.5 text-red-400" />
+                    <AlertCircle className="h-5 w-5 mr-3 flex-shrink-0 mt-0.5 text-red-500" />
                     <span>{error}</span>
                   </motion.div>
                 )}
@@ -306,20 +295,20 @@ function WishList() {
           </div>
 
           <div className="order-1 lg:order-2">
-            {/* Feature highlights */}
+            {/* Feature highlights with light theme */}
             <div className="relative">
               {/* Decorative elements */}
-              <div className="absolute -top-20 -right-20 w-64 h-64 bg-violet-600/20 rounded-full blur-3xl opacity-50" />
-              <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-indigo-600/20 rounded-full blur-3xl opacity-30" />
+              <div className="absolute -top-20 -right-20 w-64 h-64 bg-blue-100/50 rounded-full blur-3xl opacity-50" />
+              <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-indigo-100/50 rounded-full blur-3xl opacity-30" />
               
               {/* Glass card with features */}
               <motion.div 
-                className="relative backdrop-blur-xl bg-white/5 border border-white/10 rounded-3xl overflow-hidden shadow-2xl"
+                className="relative bg-white border border-gray-200 rounded-3xl overflow-hidden shadow-xl"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4, duration: 0.6 }}
               >
-                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-violet-500 to-indigo-500" />
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 to-indigo-500" />
                 
                 <div className="p-8">
                   <div className="flex items-center justify-between mb-6">
@@ -328,70 +317,71 @@ function WishList() {
                       <div className="w-3 h-3 rounded-full bg-yellow-400" />
                       <div className="w-3 h-3 rounded-full bg-green-400" />
                     </div>
-                    <div className="text-white/40 text-xs">mailjet.io</div>
+                    <div className="text-gray-400 text-xs">mailgenie.ai</div>
                   </div>
                   
-                 {/* Testimonial carousel */}
-<div className="relative min-h-[240px] mb-8 overflow-hidden">
-  <AnimatePresence mode="wait">
-    {testimonials.map((testimonial, index) => (
-      activeTestimonial === index && (
-        <motion.div
-          key={index}
-          className="absolute inset-0 p-6 rounded-2xl bg-gradient-to-br from-white/5 to-transparent border border-white/10 flex flex-col justify-between"
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -20 }}
-          transition={{ duration: 0.3 }}
-        >
-          <p className="text-white/90 text-lg font-light italic leading-relaxed flex-grow">{testimonial.text}</p>
-          <div className="flex items-center mt-4">
-            <img
-              src={testimonial.avatar || "/placeholder.svg"}
-              alt={testimonial.name}
-              className="w-10 h-10 rounded-full mr-3 object-cover border border-white/20"
-            />
-            <div>
-              <p className="text-white font-medium">{testimonial.name}</p>
-              <p className="text-white/60 text-sm">{testimonial.role}</p>
-            </div>
-          </div>
-        </motion.div>
-      )
-    ))}
-  </AnimatePresence>
-  
-  {/* Testimonial indicators */}
-  <div className="absolute bottom-2 right-2 flex space-x-1">
-    {testimonials.map((_, index) => (
-      <button
-        key={index}
-        onClick={() => setActiveTestimonial(index)}
-        className={`w-2 h-2 rounded-full transition-colors ${
-          activeTestimonial === index ? 'bg-white' : 'bg-white/30'
-        }`}
-        aria-label={`View testimonial ${index + 1}`}
-      />
-    ))}
-  </div>
-</div>
+                  {/* Testimonial carousel */}
+                  <div className="relative min-h-[240px] mb-8 overflow-hidden">
+                    <AnimatePresence mode="wait">
+                      {testimonials.map((testimonial, index) => (
+                        activeTestimonial === index && (
+                          <motion.div
+                            key={index}
+                            className="absolute inset-0 p-6 rounded-2xl bg-gray-50 border border-gray-100 flex flex-col justify-between shadow-sm"
+                            initial={{ opacity: 0, x: 20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            exit={{ opacity: 0, x: -20 }}
+                            transition={{ duration: 0.3 }}
+                          >
+                            <p className="text-gray-700 text-lg font-light italic leading-relaxed flex-grow">{testimonial.text}</p>
+                            <div className="flex items-center mt-4">
+                              <img
+                                src={testimonial.avatar || "/placeholder.svg"}
+                                alt={testimonial.name}
+                                className="w-10 h-10 rounded-full mr-3 object-cover border border-gray-200"
+                              />
+                              <div>
+                                <p className="text-gray-900 font-medium">{testimonial.name}</p>
+                                <p className="text-gray-500 text-sm">{testimonial.role}</p>
+                              </div>
+                            </div>
+                          </motion.div>
+                        )
+                      ))}
+                    </AnimatePresence>
+                    
+                    {/* Testimonial indicators */}
+                    <div className="absolute bottom-2 right-2 flex space-x-1">
+                      {testimonials.map((_, index) => (
+                        <button
+                          key={index}
+                          onClick={() => setActiveTestimonial(index)}
+                          className={`w-2 h-2 rounded-full transition-colors ${
+                            activeTestimonial === index ? 'bg-gray-700' : 'bg-gray-300'
+                          }`}
+                          aria-label={`View testimonial ${index + 1}`}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                  
                   {/* Feature list */}
                   <div className="space-y-4">
                     {features.map((feature, index) => (
                       <motion.div
                         key={index}
-                        className="flex items-start p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-colors"
+                        className="flex items-start p-4 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors shadow-sm"
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.5 + (index * 0.1) }}
                         whileHover={{ scale: 1.02 }}
                       >
-                        <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-gradient-to-br from-violet-500/30 to-indigo-500/30 flex items-center justify-center mr-4 text-xl">
+                        <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-gradient-to-br from-blue-100 to-indigo-100 flex items-center justify-center mr-4 text-xl shadow-sm">
                           {feature.icon}
                         </div>
                         <div>
-                          <h3 className="text-white font-medium">{feature.title}</h3>
-                          <p className="text-white/60 text-sm mt-1">{feature.description}</p>
+                          <h3 className="text-gray-900 font-medium">{feature.title}</h3>
+                          <p className="text-gray-600 text-sm mt-1">{feature.description}</p>
                         </div>
                       </motion.div>
                     ))}
@@ -401,7 +391,7 @@ function WishList() {
                   <div className="mt-8">
                     <motion.a
                       href="#"
-                      className="flex items-center justify-between p-4 rounded-xl bg-gradient-to-r from-violet-600/20 to-indigo-600/20 hover:from-violet-600/30 hover:to-indigo-600/30 text-white/90 transition-colors"
+                      className="flex items-center justify-between p-4 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-700 transition-colors shadow-sm"
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                     >
@@ -415,24 +405,9 @@ function WishList() {
           </div>
         </div>
         
-        {/* Bottom section with logos */}
-        <motion.div 
-          className="mt-24 text-center"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7 }}
-        >
-          <p className="text-white/40 uppercase text-sm tracking-wider mb-8">Backed by world-class investors</p>
-          <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16">
-            {['Sequoia', 'Andreessen Horowitz', 'Y Combinator', 'Accel', 'Benchmark'].map((name, i) => (
-              <div key={i} className="text-white/30 font-serif text-xl md:text-2xl font-bold tracking-tight">
-                {name}
-              </div>
-            ))}
-          </div>
-        </motion.div>
       </div>
 
+      {/* We need to keep BackgroundBeams but might need to customize it separately */}
       <BackgroundBeams />
     </div>
   );
