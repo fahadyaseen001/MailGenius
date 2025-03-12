@@ -1,14 +1,31 @@
 import { ArrowLeft, ExternalLink } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useLocation } from "react-router-dom"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 export default function ResetLinkSentPage() {
   const location = useLocation()
   const [isResending, setIsResending] = useState(false)
+  const [backgroundState, setBackgroundState] = useState(0)
   
   // Get email from location state, or use default for demo
   const userEmail = location.state?.email || "fahadyaseen102@gmail.com"
+
+  // Background animation effect
+  useEffect(() => {
+    const backgroundInterval = setInterval(() => {
+      setBackgroundState(prevState => (prevState + 1) % 2)
+    }, 3000)
+    
+    return () => clearInterval(backgroundInterval)
+  }, [])
+
+  // Determine background gradient class based on state
+  const getBackgroundClass = () => {
+    return backgroundState === 0
+      ? "bg-gradient-to-r from-blue-300 to-indigo-500"
+      : "bg-gradient-to-r from-blue-500 to-indigo-300"
+  }
 
   const handleResendLink = () => {
     setIsResending(true)
@@ -20,7 +37,7 @@ export default function ResetLinkSentPage() {
   }
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-gradient-to-r from-blue-300 to-indigo-500 p-4">
+    <div className={`fixed inset-0 flex items-center justify-center p-4 transition-colors duration-4000 ease-in-out ${getBackgroundClass()}`}>
       <div className="w-full max-w-md bg-white rounded-lg shadow-md p-8">
         <div className="flex justify-center mb-6">
           <div className="flex flex-col items-center">

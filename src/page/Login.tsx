@@ -10,6 +10,7 @@ export default function LoginPage() {
   const [isEmailValid, setIsEmailValid] = useState(false)
   const [isFormValid, setIsFormValid] = useState(false)
   const [isAnimating, setIsAnimating] = useState(true)
+  const [backgroundState, setBackgroundState] = useState(0)
 
   // Email validation function
   const validateEmail = (email: string) => {
@@ -24,15 +25,33 @@ export default function LoginPage() {
     setIsFormValid(validEmail && password.length >= 6)
   }, [email, password])
 
-  // Animation effect
+  // Combined animation effects - only runs once on component mount
   useEffect(() => {
+    // Initial component animation
     setIsAnimating(true)
-    const timer = setTimeout(() => setIsAnimating(false), 200)
-    return () => clearTimeout(timer)
-  }, [])
+    const animTimer = setTimeout(() => setIsAnimating(false), 200)
+    
+    // Background gradient animation
+    const backgroundInterval = setInterval(() => {
+      setBackgroundState(prevState => (prevState + 1) % 2)
+    }, 3000)
+    
+    // Clean up both timers when component unmounts
+    return () => {
+      clearTimeout(animTimer)
+      clearInterval(backgroundInterval)
+    }
+  }, []) // Empty dependency array means this only runs once on mount
+
+  // Determine background gradient class based on state
+  const getBackgroundClass = () => {
+    return backgroundState === 0
+      ? "bg-gradient-to-r from-blue-300 to-indigo-500"
+      : "bg-gradient-to-r from-blue-500 to-indigo-300"
+  }
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-gradient-to-r from-blue-300 to-indigo-500 p-4">
+    <div className={`fixed inset-0 flex items-center justify-center p-4 transition-colors duration-4000 ease-in-out ${getBackgroundClass()}`}>
       <div 
         className={`w-full max-w-md bg-white rounded-lg shadow-md p-8 transition-all duration-500 ease-out ${
           isAnimating ? 'opacity-0 translate-y-10' : 'opacity-100 translate-y-0'
