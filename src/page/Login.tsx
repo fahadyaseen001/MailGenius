@@ -9,6 +9,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState("")
   const [isEmailValid, setIsEmailValid] = useState(false)
   const [isFormValid, setIsFormValid] = useState(false)
+  const [isAnimating, setIsAnimating] = useState(true)
 
   // Email validation function
   const validateEmail = (email: string) => {
@@ -23,9 +24,20 @@ export default function LoginPage() {
     setIsFormValid(validEmail && password.length >= 6)
   }, [email, password])
 
+  // Animation effect
+  useEffect(() => {
+    setIsAnimating(true)
+    const timer = setTimeout(() => setIsAnimating(false), 200)
+    return () => clearTimeout(timer)
+  }, [])
+
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gradient-to-r from-blue-300 to-indigo-500 p-4">
-      <div className="w-full max-w-md bg-white rounded-lg shadow-md p-8">
+      <div 
+        className={`w-full max-w-md bg-white rounded-lg shadow-md p-8 transition-all duration-500 ease-out ${
+          isAnimating ? 'opacity-0 translate-y-10' : 'opacity-100 translate-y-0'
+        }`}
+      >
         <div className="flex justify-center mb-4">
           <div className="flex items-center">
             <div className="bg-blue-500 text-white p-2 rounded">

@@ -29,6 +29,11 @@ const Header = () => {
 
   const handleLogin = () => {
     navigate("/login")
+    
+  }
+
+  const handleSignUp = () => {
+    navigate("/signup")
   }
 
 
@@ -199,6 +204,7 @@ const Header = () => {
             }}
             whileTap={{ scale: 0.95 }}
             transition={{ duration: 0.1 }}
+             onClick={handleSignUp}
           >
             Sign up
             <svg
