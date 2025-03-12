@@ -27,6 +27,10 @@ const Header = () => {
     navigate("/dashboard")
   }
 
+  const handleLogin = () => {
+    navigate("/login")
+  }
+
 
   const getMenuContentByName = (name: string) => {
     switch (name.toLowerCase()) {
@@ -176,7 +180,7 @@ const Header = () => {
           <div className="hidden lg:block h-6 w-px bg-gray-300 mx-2"></div>
 
           <div className="relative group hidden lg:block">
-            <button className="inline-flex text-sm font-medium text-black ml-4">
+            <button className="inline-flex text-sm font-medium text-black ml-4" onClick={handleLogin}>
               <span className="relative">
                 Login
                 <div

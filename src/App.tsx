@@ -7,6 +7,10 @@ import PricingPage from './page/PricingPage';
 
 
 import Layout from './components/Layout';
+import Login from './page/Login';
+import SignUp from './page/SignUp';
+import ForgotPassword from './page/ForgotPassword';
+import ResetLinkSentPage from './page/ResetLinkSent';
 
 
 const App = () => {
@@ -15,7 +19,10 @@ const App = () => {
       <Routes>
         {/* Dashboard route excluded from Layout */}
         <Route path="/dashboard" element={<Dashboard />} />
-        
+        <Route path="/login" element={<Login/>} />
+        <Route path="/signup" element={<SignUp/>} />
+        <Route path="/forgot-password" element={<ForgotPassword/>} />
+        <Route path="/reset-password" element={<ResetLinkSentPage/>} />
         {/* All other routes with the common Layout */}
         <Route element={<LayoutWrapper />}>
           <Route

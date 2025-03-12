@@ -108,7 +108,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ handleGetStarted }) => {
               </motion.span>
               <br />
               <motion.span 
-                className="inline-block bg-gradient-to-r from-blue-500 to-indigo-600 text-transparent bg-clip-text"
+                className="inline-block bg-gradient-to-r from-blue-400 to-indigo-600 text-transparent bg-clip-text"
                 initial={{ opacity: 0 }}
                 animate={controls}
                 transition={{ duration: 0.5, delay: 0.2, ease: smoothEasing }}
