@@ -1,4 +1,5 @@
 import { Marquee } from "@/components/ui/marquee";
+import { motion } from "framer-motion";
 
 const Logos = {
     canva: () => (
@@ -75,27 +76,43 @@ const Logos = {
   
 
 const TrustedBySection = () => {
+  // Animation variants
+  const fadeIn = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { duration: 0.8, ease: "easeOut" }
+    }
+  };
+
   return (
-    <section className="py-8 bg-white">
-    <div className="container mx-auto px-4">
-      <div className="flex flex-col items-center justify-center space-y-8 text-center">
-    
-        <Marquee className="py-8" speed={200}>
-          {[Logos.canva, Logos.hubspot, Logos.openai, Logos.square].map((Logo, index) => (
-            <div
-              key={index}
-              className="mx-12 flex items-center justify-center transition-opacity duration-200"
-            >
-              <Logo />
-            </div>
-          ))}
-        </Marquee>
-
-
+    <motion.section 
+      className="py-8 bg-white"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.3 }}
+      variants={fadeIn}
+    >
+      <div className="container mx-auto px-4">
+        <div className="flex flex-col items-center justify-center space-y-8 text-center">
+          <Marquee className="py-8" speed={200}>
+            {[Logos.canva, Logos.hubspot, Logos.openai, Logos.square].map((Logo, index) => (
+              <motion.div
+                key={index}
+                className="mx-12 flex items-center justify-center transition-opacity duration-200"
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1, duration: 0.5 }}
+              >
+                <Logo />
+              </motion.div>
+            ))}
+          </Marquee>
+        </div>
       </div>
-    </div>
-    </section>
-    
+    </motion.section>
   );
 };
 

@@ -1,6 +1,6 @@
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useAnimation } from "framer-motion";
 import TabsComponent from "./ui/tab-switcher";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 interface RestSectionProps {
   handleGetStarted: () => void;
@@ -37,6 +37,30 @@ const headingContent: Record<string, HeadingContent> = {
 
 const RestSection: React.FC<RestSectionProps> = ({ handleGetStarted }) => {
   const [activeTab, setActiveTab] = useState<string | null>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const controls = useAnimation();
+  
+  // Start animation when section comes into view
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          controls.start("visible");
+        }
+      },
+      { threshold: 0.2 }
+    );
+    
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+    
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, [controls]);
   
   const handleTabChange = (tab: string) => {
     setActiveTab(tab);
@@ -76,12 +100,51 @@ const RestSection: React.FC<RestSectionProps> = ({ handleGetStarted }) => {
       : '59, 130, 246';
   };
 
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: "easeOut" }
+    }
+  };
+
+  const imageVariants = {
+    hidden: { opacity: 0, x: 30 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: { duration: 0.7, ease: "easeOut", delay: 0.3 }
+    }
+  };
+
   return (
-    <section className="relative flex justify-between items-center w-full pb-0 overflow-hidden px-25 lg:px-35">
+    <motion.section 
+      ref={sectionRef}
+      className="relative flex justify-between items-center w-full pb-0 overflow-hidden px-25 lg:px-35"
+      variants={containerVariants}
+      initial="hidden"
+      animate={controls}
+    >
       <div className="flex flex-col items-start justify-center max-w-3xl z-10">
-        <div className="mb-30">
+        <motion.div 
+          className="mb-30"
+          variants={itemVariants}
+        >
           <TabsComponent onTabChange={handleTabChange} defaultTab={activeTab || undefined} />
-        </div>
+        </motion.div>
         
         {activeTab ? (
           <AnimatePresence mode="wait">
@@ -103,7 +166,8 @@ const RestSection: React.FC<RestSectionProps> = ({ handleGetStarted }) => {
             </motion.h1>
           </AnimatePresence>
         ) : (
-          <h1
+          <motion.h1
+            variants={itemVariants}
             className="font-[600] text-black leading-[74px] text-[74px] tracking-tight mb-6 text-left"
             style={{
               fontFamily: "Roobert, sans-serif",
@@ -147,33 +211,38 @@ const RestSection: React.FC<RestSectionProps> = ({ handleGetStarted }) => {
             >
              Send hyper relevant emails
             </motion.span>
-          </h1>
+          </motion.h1>
         )}
 
-        <motion.button
-          onClick={handleGetStarted}
-          className="text-sm font-medium bg-black text-white px-3.5 sm:px-4 lg:px-5 py-2 sm:py-2.5 rounded-md transition-all duration-300 flex items-center justify-center gap-2 shadow-sm"
-          style={{ fontFamily: "Roobert, sans-serif", fontWeight: 600 }}
-          whileHover={{ 
-            backgroundColor: activeTab ? headingContent[activeTab].highlightColor : "grey",
-            scale: 1.04
-          }}
-          whileTap={{ scale: 0.95 }}
-          transition={{ duration: 0.1 }}
-        >
-          Start building for free
-          <svg
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            width="16"
-            height="16"
+        <motion.div variants={itemVariants}>
+          <motion.button
+            onClick={handleGetStarted}
+            className="text-sm font-medium bg-black text-white px-3.5 sm:px-4 lg:px-5 py-2 sm:py-2.5 rounded-md transition-all duration-300 flex items-center justify-center gap-2 shadow-sm"
+            style={{ fontFamily: "Roobert, sans-serif", fontWeight: 600 }}
+            whileHover={{ 
+              backgroundColor: activeTab ? headingContent[activeTab].highlightColor : "grey",
+              scale: 1.04
+            }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ duration: 0.1 }}
           >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-          </svg>
-        </motion.button> 
+            Start building for free
+            <svg
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              width="16"
+              height="16"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </motion.button>
+        </motion.div> 
       </div>
 
+      <motion.div
+        variants={imageVariants}
+      >
         <img 
           src="/images/mailopen.png" 
           alt="Decorative element" 
@@ -181,7 +250,8 @@ const RestSection: React.FC<RestSectionProps> = ({ handleGetStarted }) => {
           loading="eager"
           fetchPriority="high"
         />
-    </section>
+      </motion.div>
+    </motion.section>
   );
 };
 

@@ -9,6 +9,7 @@ import {
   DropdownMenuTrigger 
 } from "@/components/ui/dropdown-menu"
 import { useNavigate } from "react-router-dom"
+import { motion } from "framer-motion"
 
 // Types
 type BillingPeriod = "monthly" | "quarterly" | "yearly"
@@ -40,15 +41,27 @@ type PricingPlan = {
   minSeats?: number
 }
 
+// Animation variants - simplified for sequential animation
+const fadeInUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    transition: { duration: 0.5 }
+  }
+}
+
 // Pricing Card Component
 function PricingCard({ 
   plan, 
   billingPeriod, 
-  currency
+  currency,
+  index
 }: { 
   plan: PricingPlan, 
   billingPeriod: BillingPeriod,
-  currency: Currency
+  currency: Currency,
+  index: number
 }) {
   // Calculate price based on billing period
   const getDiscount = () => {
@@ -66,7 +79,14 @@ function PricingCard({
   const showDiscountBadge = billingPeriod !== "monthly" && !plan.customPrice;
   
   return (
-    <div className={`border ${plan.highlighted ? "border-2 border-blue-500" : ""} rounded-lg ${plan.highlighted ? "bg-black text-white" : "bg-[#f9f9f7]"} ${plan.highlighted ? "relative" : ""}`}>
+    <motion.div 
+      className={`border ${plan.highlighted ? "border-2 border-blue-500" : ""} rounded-lg ${plan.highlighted ? "bg-black text-white" : "bg-[#f9f9f7]"} ${plan.highlighted ? "relative" : ""}`}
+      initial="hidden"
+      animate="visible"
+      variants={fadeInUp}
+      transition={{ delay: 1.2 + (index * 0.2) }}
+      whileHover={{ y: -5, transition: { duration: 0.2 } }}
+    >
       {plan.highlighted && (
         <div className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-center py-2 rounded-t-md font-medium">
           USER'S TOP CHOICE
@@ -111,9 +131,11 @@ function PricingCard({
           </div>
         </div>
 
-        <Button className={`w-full mt-4 ${plan.highlighted 
-          ? "bg-gradient-to-r from-blue-500 to-indigo-600 hover:bg-blue-700" 
-          : "bg-gradient-to-r from-blue-500 to-indigo-600 hover:bg-gray-100"}`}>
+        <Button 
+          className={`w-full mt-4 ${plan.highlighted 
+            ? "bg-gradient-to-r from-blue-500 to-indigo-600 hover:bg-blue-700" 
+            : "bg-gradient-to-r from-blue-500 to-indigo-600 hover:bg-gray-100"}`}
+        >
           {plan.buttonText}
         </Button>
 
@@ -124,8 +146,8 @@ function PricingCard({
           </p>
 
           <div className="space-y-3">
-            {plan.features.map((feature, index) => (
-              <div key={index} className="flex gap-3">
+            {plan.features.map((feature, featureIndex) => (
+              <div key={featureIndex} className="flex gap-3">
                 <div className={`flex-shrink-0 w-5 h-5 ${plan.highlighted ? "bg-blue-900/50" : "bg-gray-100"} rounded-full flex items-center justify-center`}>
                   {feature.isComingSoon ? (
                     <Clock className={`w-3.5 h-3.5 ${plan.highlighted ? "text-blue-400" : "text-gray-500"}`} />
@@ -146,7 +168,7 @@ function PricingCard({
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
@@ -263,7 +285,13 @@ export default function PricingPage() {
   return (
     <div className="w-full max-w-6xl mx-auto px-4 py-8">
       {/* Free Plan Banner */}
-      <div className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-lg p-6 mb-8 flex justify-between items-center">
+      <motion.div 
+        className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-lg p-6 mb-8 flex justify-between items-center"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        whileHover={{ y: -5 }}
+      >
         <div className="flex items-center gap-2">
           <h2 className="text-2xl font-bold">Free Plan</h2>
           <div className="flex items-baseline">
@@ -283,10 +311,15 @@ export default function PricingPage() {
         >
           Get Started
         </Button>
-      </div>
+      </motion.div>
 
       {/* Billing Toggle */}
-      <div className="flex justify-between items-center mb-8">
+      <motion.div 
+        className="flex justify-between items-center mb-8"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.3 }}
+      >
         <Tabs 
           defaultValue={billingPeriod} 
           onValueChange={(value) => setBillingPeriod(value as BillingPeriod)}
@@ -316,15 +349,15 @@ export default function PricingPage() {
         
         <DropdownMenu>
           <DropdownMenuTrigger className="flex items-center gap-2 bg-gray-50 px-3 py-2 rounded-md hover:bg-gray-100">
-          <span className="flex items-center">
-            <img
+            <span className="flex items-center">
+              <img
                 src={currency.flag}
                 alt="Currency Flag"
-              className="w-5 h-5 mr-2"
-            />
+                className="w-5 h-5 mr-2"
+              />
               {currency.code} ({currency.symbol})
-          </span>
-          <ChevronDown className="w-4 h-4" />
+            </span>
+            <ChevronDown className="w-4 h-4" />
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuItem onClick={() => setCurrency({
@@ -353,19 +386,25 @@ export default function PricingPage() {
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-      </div>
+      </motion.div>
 
-      {/* Pricing Cards */}
-      <div className="grid md:grid-cols-3 gap-6">
+      {/* Cards container */}
+      <motion.div 
+        className="grid md:grid-cols-3 gap-6"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.6 }}
+      >
         {pricingPlans.map((plan, index) => (
           <PricingCard 
             key={index}
             plan={plan}
             billingPeriod={billingPeriod}
             currency={currency}
+            index={index}
           />
         ))}
-      </div>
+      </motion.div>
     </div>
   );
 }

@@ -1,5 +1,5 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useEffect } from 'react';
+import { motion, useAnimation } from 'framer-motion';
 import TrustedBySection from './trusted-by-section';
 import RestSection from './rest-section';
 
@@ -8,11 +8,46 @@ interface HeroSectionProps {
 }
 
 const HeroSection: React.FC<HeroSectionProps> = ({ handleGetStarted }) => {
+  const controls = useAnimation();
+  
+  // Start animations after component mounts to prevent initial stuttering
+  useEffect(() => {
+    // Preload images
+    const preloadImages = () => {
+      const imageUrls = ['/images/@image.png', '/images/mailclosed.png'];
+      imageUrls.forEach(url => {
+        const img = new Image();
+        img.src = url;
+      });
+    };
+    
+    preloadImages();
+    
+    // Small delay to ensure DOM is fully rendered before animations start
+    const timer = setTimeout(() => {
+      controls.start({ opacity: 1, y: 0 });
+    }, 100);
+    
+    return () => clearTimeout(timer);
+  }, [controls]);
+  
+  // Smooth easing function
+  const smoothEasing = [0.25, 0.1, 0.25, 1]; // Custom cubic-bezier
+
   return (
     <section className="relative overflow-hidden pt-0 pb-20 md:pb-28 lg:pb-32 bg-white">
       <div className="container mx-auto px-2 sm:px-4 max-w-screen-2xl relative">
         {/* Left side image */}
-        <div className="absolute left-0 bottom-0 z-0 hidden md:block">
+        <motion.div 
+          className="absolute left-0 bottom-0 z-0 hidden md:block"
+          initial={{ opacity: 0, x: -20 }}
+          animate={controls}
+          transition={{ 
+            duration: 0.8, 
+            ease: smoothEasing,
+            delay: 0.1
+          }}
+        >
           <img 
             src="/images/@image.png" 
             alt="Decorative element" 
@@ -21,10 +56,19 @@ const HeroSection: React.FC<HeroSectionProps> = ({ handleGetStarted }) => {
             loading="eager"
             fetchPriority="high"
           />
-        </div>
+        </motion.div>
 
         {/* Right side image  */}
-        <div className="absolute right-0 top-0 z-0 hidden md:block">
+        <motion.div 
+          className="absolute right-0 top-0 z-0 hidden md:block"
+          initial={{ opacity: 0, x: 20 }}
+          animate={controls}
+          transition={{ 
+            duration: 0.8, 
+            ease: smoothEasing,
+            delay: 0.1
+          }}
+        >
           <img 
             src="/images/mailclosed.png" 
             alt="Decorative element" 
@@ -33,7 +77,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ handleGetStarted }) => {
             loading="eager"
             fetchPriority="high"
           />
-        </div>
+        </motion.div>
 
         {/* Main Content Card */}
         <div
@@ -43,8 +87,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({ handleGetStarted }) => {
           <motion.div 
             className="flex flex-col items-center text-center"
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            animate={controls}
+            transition={{ duration: 0.6, ease: smoothEasing }}
           >
             <h1
               className="font-[600] text-black leading-[74px] text-[74px] tracking-tight mb-6"
@@ -57,8 +101,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({ handleGetStarted }) => {
             >
               <motion.span
                 initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.5 }}
+                animate={controls}
+                transition={{ duration: 0.5, ease: smoothEasing }}
               >
                 Never Miss any Inbox
               </motion.span>
@@ -66,8 +110,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({ handleGetStarted }) => {
               <motion.span 
                 className="inline-block bg-gradient-to-r from-blue-500 to-indigo-600 text-transparent bg-clip-text"
                 initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
+                animate={controls}
+                transition={{ duration: 0.5, delay: 0.2, ease: smoothEasing }}
               >
                 — with Mailsonic.ai
               </motion.span>
@@ -106,8 +150,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({ handleGetStarted }) => {
         <motion.div
           className="mt-15 text-center"
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
+          animate={controls}
+          transition={{ duration: 0.6, delay: 0.4, ease: smoothEasing }}
         >
           <p className="uppercase text-xs font-medium tracking-wider text-black mb-3" style={{ fontFamily: "Roobert, sans-serif", fontWeight: 600, }}>
             TRUSTED BY MORE THAN 300,000 LEADING GTM TEAMS OF ALL SIZES

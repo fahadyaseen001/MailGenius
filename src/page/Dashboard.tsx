@@ -83,7 +83,9 @@ function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(true)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [userMenuOpen, setUserMenuOpen] = useState(false)
+  const [campaignName, setCampaignName] = useState("")
   const navigate = useNavigate()
+  const userMenuRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const handleResize = () => {
@@ -103,18 +105,31 @@ function Dashboard() {
     window.addEventListener("resize", handleResize)
     handleResize()
 
-
     return () => {
       window.removeEventListener("resize", handleResize)
-      
     }
   }, [])
 
+  // Add click outside handler for user menu
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node) && userMenuOpen) {
+        setUserMenuOpen(false)
+      }
+    }
 
-
+    document.addEventListener("mousedown", handleClickOutside)
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside)
+    }
+  }, [userMenuOpen]);
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserEmail(e.target.value)
+  }
+
+  const handleCampaignNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCampaignName(e.target.value)
   }
 
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
@@ -222,7 +237,6 @@ function Dashboard() {
     setError("")
   }
 
-
   const handleLogoClick = () => {
     navigate("/")
   }
@@ -263,16 +277,16 @@ function Dashboard() {
                 <div className="flex items-center">
                   <button
                     onClick={handleLogoClick}
-                    className="flex items-center group p-1.5 rounded-lg transition-all duration-200 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 active:scale-95"
+                    className="flex items-center group p-1.5 rounded-lg transition-all duration-300 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 active:scale-95"
                   >
-                    <Mail className="h-6 w-6 text-blue-600 group-hover:scale-110 transition-transform duration-200" />
+                    <Mail className="h-6 w-6 text-indigo-600 transition-all duration-300" />
                     <motion.span
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
-                      className="ml-2 text-xl font-semibold text-gray-800 group-hover:text-blue-600 transition-colors duration-200"
+                      className="ml-2 text-xl font-semibold text-gray-800 group-hover:bg-gradient-to-r group-hover:from-blue-500 group-hover:to-indigo-600 group-hover:text-transparent group-hover:bg-clip-text transition-all duration-300"
                     >
-                      MailGenius
+                      MailGenie
                     </motion.span>
                   </button>
                 </div>
@@ -285,27 +299,27 @@ function Dashboard() {
               </div>
               <div className="flex-1 overflow-y-auto py-4 px-6">
                 <nav className="flex flex-col space-y-6">
-                  <a href="#" className="flex items-center text-sm font-medium text-blue-600">
-                    <BarChart3 className="h-5 w-5 mr-3" />
-                    Dashboard
+                  <a href="#" className="flex items-center text-sm font-medium group">
+                    <BarChart3 className="h-5 w-5 mr-3 text-indigo-600 transition-all duration-300" />
+                    <span className="bg-gradient-to-r from-blue-500 to-indigo-600 text-transparent bg-clip-text">Dashboard</span>
                   </a>
-                  <a href="#" className="flex items-center text-sm font-medium text-gray-600 hover:text-blue-600">
-                    <Mail className="h-5 w-5 mr-3" />
-                    Campaigns
+                  <a href="#" className="flex items-center text-sm font-medium text-gray-600 group">
+                    <Mail className="h-5 w-5 mr-3 text-gray-500 group-hover:text-indigo-600 transition-all duration-300" />
+                    <span className="group-hover:bg-gradient-to-r group-hover:from-blue-500 group-hover:to-indigo-600 group-hover:text-transparent group-hover:bg-clip-text transition-all duration-300">Campaigns</span>
                   </a>
-                  <a href="#" className="flex items-center text-sm font-medium text-gray-600 hover:text-blue-600">
-                    <Users className="h-5 w-5 mr-3" />
-                    Contacts
+                  <a href="#" className="flex items-center text-sm font-medium text-gray-600 group">
+                    <Users className="h-5 w-5 mr-3 text-gray-500 group-hover:text-indigo-600 transition-all duration-300" />
+                    <span className="group-hover:bg-gradient-to-r group-hover:from-blue-500 group-hover:to-indigo-600 group-hover:text-transparent group-hover:bg-clip-text transition-all duration-300">Contacts</span>
                   </a>
-                  <a href="#" className="flex items-center text-sm font-medium text-gray-600 hover:text-blue-600">
-                    <Settings className="h-5 w-5 mr-3" />
-                    Settings
+                  <a href="#" className="flex items-center text-sm font-medium text-gray-600 group">
+                    <Settings className="h-5 w-5 mr-3 text-gray-500 group-hover:text-indigo-600 transition-all duration-300" />
+                    <span className="group-hover:bg-gradient-to-r group-hover:from-blue-500 group-hover:to-indigo-600 group-hover:text-transparent group-hover:bg-clip-text transition-all duration-300">Settings</span>
                   </a>
                 </nav>
               </div>
               <div className="border-t border-gray-200 p-4">
                 <div className="flex items-center">
-                  <div className="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+                  <div className="h-8 w-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600">
                     <User className="h-4 w-4" />
                   </div>
                   <div className="ml-3">
@@ -331,19 +345,22 @@ function Dashboard() {
             <div className="flex items-center">
               <button
                 onClick={handleLogoClick}
-                className="flex items-center group p-1.5 rounded-lg transition-all duration-200 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 active:scale-95"
+                className="flex items-center group p-1.5 rounded-lg transition-all duration-300 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 active:scale-95"
               >
-                <Mail className="h-6 w-6 text-blue-600 group-hover:scale-110 transition-transform duration-200" />
-                {sidebarOpen && (
-                  <motion.span
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    className="ml-2 text-xl font-semibold text-gray-800 group-hover:text-blue-600 transition-colors duration-200"
-                  >
-                    MailGenius
-                  </motion.span>
-                )}
+                <Mail className="h-6 w-6 text-indigo-600 transition-all duration-300" />
+                <div className="overflow-hidden w-full">
+                  {sidebarOpen && (
+                    <motion.span
+                      initial={{ opacity: 0, width: 0 }}
+                      animate={{ opacity: 1, width: "auto" }}
+                      exit={{ opacity: 0, width: 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="ml-2 text-xl font-semibold text-gray-800 whitespace-nowrap group-hover:bg-gradient-to-r group-hover:from-blue-500 group-hover:to-indigo-600 group-hover:text-transparent group-hover:bg-clip-text"
+                    >
+                      MailGenie
+                    </motion.span>
+                  )}
+                </div>
               </button>
             </div>
           </div>
@@ -352,28 +369,64 @@ function Dashboard() {
               <li>
                 <a
                   href="#"
-                  className="flex items-center px-3 py-2 text-sm font-medium rounded-lg bg-blue-50 text-blue-600"
+                  className="flex items-center px-3 py-2 text-sm font-medium rounded-lg bg-indigo-50 group"
                 >
-                  <BarChart3 className="h-5 w-5 flex-shrink-0" />
-                  {sidebarOpen && <span className="ml-3">Dashboard</span>}
+                  <BarChart3 className="h-5 w-5 flex-shrink-0 text-indigo-600 transition-all duration-300" />
+                  <div className="overflow-hidden flex-1">
+                    {sidebarOpen && (
+                      <motion.span
+                        initial={{ opacity: 0, width: 0 }}
+                        animate={{ opacity: 1, width: "auto" }}
+                        exit={{ opacity: 0, width: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="ml-3 whitespace-nowrap bg-gradient-to-r from-blue-500 to-indigo-600 text-transparent bg-clip-text"
+                      >
+                        Dashboard
+                      </motion.span>
+                    )}
+                  </div>
                 </a>
               </li>
               <li>
                 <a
                   href="#"
-                  className="flex items-center px-3 py-2 text-sm font-medium rounded-lg text-gray-600 hover:bg-gray-100"
+                  className="flex items-center px-3 py-2 text-sm font-medium rounded-lg text-gray-600 hover:bg-gray-100 group"
                 >
-                  <Mail className="h-5 w-5 flex-shrink-0" />
-                  {sidebarOpen && <span className="ml-3">Campaigns</span>}
+                  <Mail className="h-5 w-5 flex-shrink-0 text-gray-500 group-hover:text-indigo-600 transition-all duration-300" />
+                  <div className="overflow-hidden flex-1">
+                    {sidebarOpen && (
+                      <motion.span
+                        initial={{ opacity: 0, width: 0 }}
+                        animate={{ opacity: 1, width: "auto" }}
+                        exit={{ opacity: 0, width: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="ml-3 whitespace-nowrap group-hover:bg-gradient-to-r group-hover:from-blue-500 group-hover:to-indigo-600 group-hover:text-transparent group-hover:bg-clip-text"
+                      >
+                        Campaigns
+                      </motion.span>
+                    )}
+                  </div>
                 </a>
               </li>
               <li>
                 <a
                   href="#"
-                  className="flex items-center px-3 py-2 text-sm font-medium rounded-lg text-gray-600 hover:bg-gray-100"
+                  className="flex items-center px-3 py-2 text-sm font-medium rounded-lg text-gray-600 hover:bg-gray-100 group"
                 >
-                  <Users className="h-5 w-5 flex-shrink-0" />
-                  {sidebarOpen && <span className="ml-3">Leads</span>}
+                  <Users className="h-5 w-5 flex-shrink-0 text-gray-500 group-hover:text-indigo-600 transition-all duration-300" />
+                  <div className="overflow-hidden flex-1">
+                    {sidebarOpen && (
+                      <motion.span
+                        initial={{ opacity: 0, width: 0 }}
+                        animate={{ opacity: 1, width: "auto" }}
+                        exit={{ opacity: 0, width: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="ml-3 whitespace-nowrap group-hover:bg-gradient-to-r group-hover:from-blue-500 group-hover:to-indigo-600 group-hover:text-transparent group-hover:bg-clip-text"
+                      >
+                        Leads
+                      </motion.span>
+                    )}
+                  </div>
                 </a>
               </li>
             </ul>
@@ -412,10 +465,9 @@ function Dashboard() {
               </div>
 
               <div className="flex items-center space-x-4">
-
                 <div className="relative">
                   <button onClick={() => setUserMenuOpen(!userMenuOpen)} className="flex items-center space-x-2">
-                    <div className="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+                    <div className="h-8 w-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600">
                       <User className="h-4 w-4" />
                     </div>
                     <div className="hidden md:flex items-center">
@@ -427,6 +479,7 @@ function Dashboard() {
                   <AnimatePresence>
                     {userMenuOpen && (
                       <motion.div
+                        ref={userMenuRef}
                         className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-gray-200 z-50"
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -434,15 +487,11 @@ function Dashboard() {
                       >
                         <div className="py-1">
                           <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                            Your Profile
-                          </a>
-                          <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                            Settings
+                            Coming Soon...
                           </a>
                           <a href="/" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                             <div className="flex items-center">
-                              <LogOut className="h-4 w-4 mr-2"
-                              />
+                              <LogOut className="h-4 w-4 mr-2" />
                               Sign out
                             </div>
                           </a>
@@ -514,7 +563,7 @@ function Dashboard() {
                     <div className="flex w-full min-w-max items-center">
                       <div className="flex flex-col items-center">
                         <div
-                          className={`flex h-10 w-10 items-center justify-center rounded-full ${step >= 1 ? "bg-blue-600 text-white" : "bg-gray-200 text-gray-600"} transition-colors duration-300`}
+                          className={`flex h-10 w-10 items-center justify-center rounded-full ${step >= 1 ? "bg-gradient-to-r from-blue-500 to-indigo-600 text-white" : "bg-gray-200 text-gray-600"} transition-colors duration-300`}
                         >
                           {step > 1 ? <CheckCircle className="h-5 w-5" /> : "1"}
                         </div>
@@ -525,12 +574,12 @@ function Dashboard() {
                       </div>
 
                       <div
-                        className={`flex-1 h-[2px] mx-4 ${step > 1 ? "bg-blue-600" : "bg-gray-200"} transition-colors duration-300`}
+                        className={`flex-1 h-[2px] mx-4 ${step > 1 ? "bg-gradient-to-r from-blue-500 to-indigo-600" : "bg-gray-200"} transition-colors duration-300`}
                       />
 
                       <div className="flex flex-col items-center">
                         <div
-                          className={`flex h-10 w-10 items-center justify-center rounded-full ${step >= 2 ? "bg-blue-600 text-white" : "bg-gray-200 text-gray-600"} transition-colors duration-300`}
+                          className={`flex h-10 w-10 items-center justify-center rounded-full ${step >= 2 ? "bg-gradient-to-r from-blue-500 to-indigo-600 text-white" : "bg-gray-200 text-gray-600"} transition-colors duration-300`}
                         >
                           {step > 2 ? <CheckCircle className="h-5 w-5" /> : "2"}
                         </div>
@@ -541,12 +590,12 @@ function Dashboard() {
                       </div>
 
                       <div
-                        className={`flex-1 h-[2px] mx-4 ${step > 2 ? "bg-blue-600" : "bg-gray-200"} transition-colors duration-300`}
+                        className={`flex-1 h-[2px] mx-4 ${step > 2 ? "bg-gradient-to-r from-blue-500 to-indigo-600" : "bg-gray-200"} transition-colors duration-300`}
                       />
 
                       <div className="flex flex-col items-center">
                         <div
-                          className={`flex h-10 w-10 items-center justify-center rounded-full ${step >= 3 ? "bg-blue-600 text-white" : "bg-gray-200 text-gray-600"} transition-colors duration-300`}
+                          className={`flex h-10 w-10 items-center justify-center rounded-full ${step >= 3 ? "bg-gradient-to-r from-blue-500 to-indigo-600 text-white" : "bg-gray-200 text-gray-600"} transition-colors duration-300`}
                         >
                           {step > 3 ? <CheckCircle className="h-5 w-5" /> : "3"}
                         </div>
@@ -557,12 +606,12 @@ function Dashboard() {
                       </div>
 
                       <div
-                        className={`flex-1 h-[2px] mx-4 ${step > 3 ? "bg-blue-600" : "bg-gray-200"} transition-colors duration-300`}
+                        className={`flex-1 h-[2px] mx-4 ${step > 3 ? "bg-gradient-to-r from-blue-500 to-indigo-600" : "bg-gray-200"} transition-colors duration-300`}
                       />
 
                       <div className="flex flex-col items-center">
                         <div
-                          className={`flex h-10 w-10 items-center justify-center rounded-full ${step >= 4 ? "bg-blue-600 text-white" : "bg-gray-200 text-gray-600"} transition-colors duration-300`}
+                          className={`flex h-10 w-10 items-center justify-center rounded-full ${step >= 4 ? "bg-gradient-to-r from-blue-500 to-indigo-600 text-white" : "bg-gray-200 text-gray-600"} transition-colors duration-300`}
                         >
                           {step > 4 ? <CheckCircle className="h-5 w-5" /> : "4"}
                         </div>
@@ -587,6 +636,21 @@ function Dashboard() {
                         transition={{ duration: 0.3 }}
                         key="step1"
                       >
+                        <div>
+                          <label htmlFor="campaignName" className="block text-sm font-medium text-gray-700 mb-1">
+                            Your campaign name
+                          </label>
+                          <input
+                            type="text"
+                            id="campaignName"
+                            value={campaignName}
+                            onChange={handleCampaignNameChange}
+                            placeholder="Enter your campaign name"
+                            className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-700 placeholder-gray-400 transition-all duration-200"
+                            required
+                          />
+                        </div>
+
                         <div>
                           <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
                             Your email address
@@ -633,8 +697,8 @@ function Dashboard() {
                           <div
                             className={`border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-all duration-200 ${
                               isDragging
-                                ? "border-blue-500 bg-blue-50"
-                                : "border-gray-300 hover:border-blue-500 hover:bg-blue-50"
+                                ? "border-indigo-500 bg-indigo-50"
+                                : "border-gray-300 hover:border-indigo-500 hover:bg-indigo-50"
                             }`}
                             onDragOver={handleDragOver}
                             onDragLeave={handleDragLeave}
@@ -658,17 +722,17 @@ function Dashboard() {
                                 repeatType: "reverse",
                               }}
                             >
-                              <Upload className="mx-auto h-10 w-10 text-blue-600 mb-3" />
+                              <Upload className="mx-auto h-10 w-10 text-indigo-600 mb-3" />
                             </motion.div>
                             <p className="text-sm text-gray-600">
-                              <span className="font-semibold text-blue-600">Click to upload</span> or drag and drop
+                              <span className="font-semibold bg-gradient-to-r from-blue-500 to-indigo-600 text-transparent bg-clip-text">Click to upload</span> or drag and drop
                             </p>
                             <p className="text-xs text-gray-500 mt-1">CSV or XLSX files only</p>
                           </div>
                         </div>
 
                         {isUploading && (
-                          <div className="flex items-center justify-center space-x-2 text-blue-600">
+                          <div className="flex items-center justify-center space-x-2 text-indigo-600">
                             <Loader2 className="animate-spin h-5 w-5" />
                             <span>Validating file...</span>
                           </div>
@@ -689,6 +753,7 @@ function Dashboard() {
                         <div className="flex items-center p-4 bg-green-50 rounded-lg border border-green-200">
                           <FileCheck className="h-6 w-6 text-green-600 mr-3" />
                           <div>
+                            <h3 className="font-medium text-gray-900 bg-gradient-to-r from-blue-500 to-indigo-600 text-transparent bg-clip-text">{campaignName}</h3>
                             <p className="font-medium text-gray-900">{fileName}</p>
                             <p className="text-sm text-gray-500">Ready to generate email content</p>
                           </div>
@@ -697,7 +762,7 @@ function Dashboard() {
                         <button
                           onClick={handleGenerateContent}
                           disabled={isGenerating}
-                          className="w-full flex items-center justify-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed"
+                          className="w-full flex items-center justify-center space-x-2 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed"
                         >
                           {isGenerating ? (
                             <>
@@ -730,17 +795,18 @@ function Dashboard() {
                         transition={{ duration: 0.3 }}
                         key="step3"
                       >
-                        <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
+                        <div className="p-4 bg-indigo-50 rounded-lg border border-indigo-200">
+                          <h3 className="font-medium text-gray-900 bg-gradient-to-r from-blue-500 to-indigo-600 text-transparent bg-clip-text mb-1">{campaignName}</h3>
                           <p className="text-gray-900 mb-2">Your AI-generated email content is ready to send.</p>
                           <a
                             href={googleSheetLink}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center text-blue-600 hover:text-blue-800 font-medium"
+                            className="flex items-center bg-gradient-to-r from-blue-500 to-indigo-600 text-transparent bg-clip-text hover:from-blue-600 hover:to-indigo-700 font-medium"
                           >
-                            <FileSpreadsheet className="h-5 w-5 mr-2" />
+                            <FileSpreadsheet className="h-5 w-5 mr-2 text-indigo-600" />
                             <span>View in Google Sheets</span>
-                            <ArrowRight className="h-4 w-4 ml-1" />
+                            <ArrowRight className="h-4 w-4 ml-1 text-indigo-600" />
                           </a>
                         </div>
 
@@ -749,7 +815,7 @@ function Dashboard() {
                           <h3 className="text-sm font-medium text-gray-700 mb-2">Email Preview:</h3>
                           <div className="p-4 bg-white rounded-lg border border-gray-300 text-sm">
                             <p className="text-gray-900 mb-2">
-                              <strong>Subject:</strong> Special Offer for [Name]
+                              <strong>Subject:</strong> {campaignName}: Special Offer for [Name]
                             </p>
                             <p className="text-gray-700">Hello [Name],</p>
                             <p className="text-gray-700 my-2">
@@ -767,7 +833,7 @@ function Dashboard() {
                         <button
                           onClick={handleSendEmails}
                           disabled={isSending}
-                          className="w-full flex items-center justify-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed"
+                          className="w-full flex items-center justify-center space-x-2 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed"
                         >
                           {isSending ? (
                             <>
@@ -805,6 +871,7 @@ function Dashboard() {
                             <CheckCircle className="h-8 w-8 text-green-600" />
                           </div>
                           <h2 className="text-xl font-bold text-gray-900">Success!</h2>
+                          <h3 className="text-lg font-semibold bg-gradient-to-r from-blue-500 to-indigo-600 text-transparent bg-clip-text">{campaignName}</h3>
                           <p className="text-gray-500 mt-1">Emails have been successfully sent!</p>
                         </div>
 
@@ -812,7 +879,7 @@ function Dashboard() {
                           <h3 className="font-medium text-gray-900 text-lg mb-3">Campaign Summary</h3>
                           <div className="flex items-center justify-center">
                             <div className="text-center">
-                              <p className="text-3xl font-bold text-blue-600">{totalEmailsSent}</p>
+                              <p className="text-3xl font-bold bg-gradient-to-r from-blue-500 to-indigo-600 text-transparent bg-clip-text">{totalEmailsSent}</p>
                               <p className="text-sm text-gray-500">Emails Sent</p>
                             </div>
                           </div>
@@ -823,16 +890,16 @@ function Dashboard() {
                             href={getMailboxLink()}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium"
+                            className="inline-flex items-center bg-gradient-to-r from-blue-500 to-indigo-600 text-transparent bg-clip-text hover:from-blue-600 hover:to-indigo-700 font-medium"
                           >
-                            <Mail className="h-5 w-5 mr-2" />
+                            <Mail className="h-5 w-5 mr-2 text-indigo-600" />
                             <span>Check your mailbox</span>
                           </a>
                         </div>
 
                         <button
                           onClick={resetForm}
-                          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200"
+                          className="w-full bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200"
                         >
                           Start a new campaign
                         </button>
@@ -866,7 +933,7 @@ function Dashboard() {
               >
                 <div className="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
                   <h2 className="text-lg font-medium text-gray-900">Recent Campaigns</h2>
-                  <button className="text-sm text-blue-600 hover:text-blue-800 font-medium">View all</button>
+                  <button className="text-sm bg-gradient-to-r from-blue-500 to-indigo-600 text-transparent bg-clip-text hover:from-blue-600 hover:to-indigo-700 font-medium">View all</button>
                 </div>
                 <div className="overflow-x-auto">
                   <table className="min-w-full divide-y divide-gray-200">

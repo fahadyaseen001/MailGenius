@@ -1,4 +1,4 @@
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { Feature108 } from "@/components/shadcnblocks-com-feature108"
 import HeroSection from '../components/hero-section'
@@ -6,6 +6,7 @@ import PortfolioSlider from "../components/ui/feature-card"
 import TestimonialSection from "../components/testimonial-section"
 import CTASection from "../components/cta-section"
 import Footer from "../components/Footer"
+import { motion, useInView, useAnimation } from "framer-motion"
 
 function Home() {
   const navigate = useNavigate()
@@ -14,6 +15,33 @@ function Home() {
   const testimonialsRef = useRef<HTMLDivElement>(null)
   const resourcesRef = useRef<HTMLDivElement>(null)
   
+  // Animation controls for each section
+  const useCasesControls = useAnimation()
+  const ctaControls = useAnimation()
+  const footerControls = useAnimation()
+  
+  // Refs to observe for animations
+  const ctaRef = useRef<HTMLDivElement>(null)
+  const footerRef = useRef<HTMLDivElement>(null)
+  
+  // Check if sections are in view
+  const useCasesInView = useInView(useCasesRef, { once: true, amount: 0.2 })
+  const ctaInView = useInView(ctaRef, { once: true, amount: 0.2 })
+  const footerInView = useInView(footerRef, { once: true, amount: 0.2 })
+
+  // Trigger animations when sections come into view
+  useEffect(() => {
+    if (useCasesInView) {
+      useCasesControls.start("visible")
+    }
+    if (ctaInView) {
+      ctaControls.start("visible")
+    }
+    if (footerInView) {
+      footerControls.start("visible")
+    }
+  }, [useCasesInView, ctaInView, footerInView, useCasesControls, ctaControls, footerControls])
+
   const handleGetStarted = () => {
     navigate("/dashboard")
   }
@@ -22,18 +50,36 @@ function Home() {
     navigate("/wishlist")
   }
 
+  // Animation variants
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 40 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { 
+        duration: 0.8, 
+        ease: "easeOut" 
+      }
+    }
+  }
+
   return (
     <div className="min-h-screen bg-white text-gray-900">
       
       {/* Hero Section */}
       <HeroSection handleGetStarted={handleGetStarted} />
 
-      <section>
+    
         <PortfolioSlider/>
-      </section>
 
       {/* Use Cases Section */}
-      <section ref={useCasesRef} className="py-24 md:py-32 bg-white">
+      <motion.section 
+        ref={useCasesRef} 
+        className="py-24 md:py-32 bg-white"
+        initial="hidden"
+        animate={useCasesControls}
+        variants={fadeInUp}
+      >
         <Feature108
           badge="Real-World Applications"
           heading="Transforming industries with data-driven insights"
@@ -107,19 +153,33 @@ function Home() {
             },
           ]}
         />
-      </section>
+      </motion.section>
 
       {/* Testimonials Section with Curved Top */}
       <TestimonialSection testimonialsRef={testimonialsRef} />
 
       {/* CTA Section */}
-      <CTASection 
-        handleGetStarted={handleGetStarted} 
-        handleBookDemo={handleBookDemo} 
-      />
+      <motion.div
+        ref={ctaRef}
+        initial="hidden"
+        animate={ctaControls}
+        variants={fadeInUp}
+      >
+        <CTASection 
+          handleGetStarted={handleGetStarted} 
+          handleBookDemo={handleBookDemo} 
+        />
+      </motion.div>
 
       {/* Footer */}
-      <Footer resourcesRef={resourcesRef} />
+      <motion.div
+        ref={footerRef}
+        initial="hidden"
+        animate={footerControls}
+        variants={fadeInUp}
+      >
+        <Footer resourcesRef={resourcesRef} />
+      </motion.div>
     </div>
   )
 }
